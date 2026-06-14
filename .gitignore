@@ -1,0 +1,44 @@
+# Node / Backend
+node_modules/
+backend/node_modules/
+backend/.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+backend/dist/
+
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+*.g.dart
+
+# Android
+android/.gradle/
+android/local.properties
+android/key.properties
+*.keystore
+*.jks
+
+# iOS
+ios/.symlinks/
+ios/Pods/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# macOS
+.DS_Store
+
+# Env / secrets
+.env
+*.env
+
+# Crash logs
+*.log

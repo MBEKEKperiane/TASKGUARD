@@ -1,0 +1,47 @@
+# ─── Production Dockerfile ────────────────────────────────────────────────────
+# Multi-stage: builder installs everything + generates Prisma client,
+# runner copies only production artefacts for a lean final image.
+
+# ── Stage 1: builder ──────────────────────────────────────────────────────────
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+RUN apk add --no-cache openssl
+
+COPY package*.json ./
+RUN npm ci --include=dev
+
+COPY prisma ./prisma
+RUN npx prisma generate
+
+COPY src ./src
+COPY server.js .
+
+# Prune dev dependencies so node_modules is production-only
+RUN npm prune --production
+
+# ── Stage 2: runner ───────────────────────────────────────────────────────────
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+RUN apk add --no-cache openssl && \
+    addgroup -S appgroup && adduser -S appuser -G appgroup
+
+# Copy only what the app needs at runtime
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/src ./src
+COPY --from=builder /app/server.js .
+COPY --from=builder /app/package.json .
+
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+USER appuser
+
+EXPOSE 3000
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["node", "server.js"]

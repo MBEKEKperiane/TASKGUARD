@@ -1,0 +1,50 @@
+version: "3.9"
+
+# ─── Development compose ──────────────────────────────────────────────────────
+# Source code is volume-mounted so nodemon picks up every change without rebuild.
+# Run with:  docker compose up --build
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-taskguard}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-1234Perian}
+      POSTGRES_DB: ${POSTGRES_DB:-taskguard_db}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-taskguard}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-taskguard}:${POSTGRES_PASSWORD:-taskguard_dev}@db:5432/${POSTGRES_DB:-taskguard_db}
+      NODE_ENV: development
+    ports:
+      - "3000:3000"
+    volumes:
+      # Hot-reload: mount source so nodemon sees changes immediately
+      - ./backend/src:/app/src
+      - ./backend/server.js:/app/server.js
+      # Prisma schema & migrations
+      - ./backend/prisma:/app/prisma
+      # Exclude node_modules from the host mount
+      - /app/node_modules
+
+volumes:
+  pgdata:

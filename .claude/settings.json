@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s http://localhost:3000/health)",
+      "Bash(taskkill /PID 5624 /F)"
+    ]
+  }
+}
