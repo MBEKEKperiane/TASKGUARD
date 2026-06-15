@@ -1,16 +1,14 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiClient {
   static const _renderUrl = 'https://taskguard.onrender.com/api';
 
   static String get _baseUrl {
-    if (kIsWeb) return _renderUrl;
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      return 'http://192.168.8.101:3000/api'; // real device → PC on same WiFi
-    }
-    return 'http://localhost:3000/api'; // iOS simulator / desktop
+    // All platforms point to the hosted Render backend in production.
+    // To develop locally on Android, temporarily swap _renderUrl for
+    // 'http://192.168.8.101:3000/api' (your machine's LAN IP).
+    return _renderUrl;
   }
 
   static final ApiClient _instance = ApiClient._internal();
