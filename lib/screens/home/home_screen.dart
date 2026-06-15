@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -84,6 +85,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _registerFcmToken() async {
+    // Web FCM requires a service worker — skip until it's configured
+    if (kIsWeb) return;
     try {
       final messaging = FirebaseMessaging.instance;
       await messaging.requestPermission();
@@ -91,7 +94,6 @@ class _HomeScreenState extends State<HomeScreen> {
       if (token != null) {
         await ApiClient().post('/notifications/token', data: {'token': token});
       }
-      // Refresh token if it changes (e.g. app reinstall)
       FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
         ApiClient().post('/notifications/token', data: {'token': newToken});
       });

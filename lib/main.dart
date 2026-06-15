@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,15 +13,13 @@ import 'screens/splash/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Firebase must be initialized before any Firebase service (FCM) is used.
-  // Wrapped in try/catch so the app still launches if google-services is not
-  // yet configured in the build environment.
   try {
     await Firebase.initializeApp();
   } catch (_) {}
 
   await LocalStorage.init();
-  await LocalNotificationService.init();
+  // flutter_local_notifications has no web support — skip on web
+  if (!kIsWeb) await LocalNotificationService.init();
 
   // Read the persisted theme before the first frame so there is no flicker.
   final prefs = await SharedPreferences.getInstance();

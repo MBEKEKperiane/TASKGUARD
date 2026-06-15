@@ -3,8 +3,10 @@ import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform, Tar
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiClient {
+  static const _renderUrl = 'https://taskguard.onrender.com/api';
+
   static String get _baseUrl {
-    if (kIsWeb) return 'http://localhost:3000/api';
+    if (kIsWeb) return _renderUrl;
     if (defaultTargetPlatform == TargetPlatform.android) {
       return 'http://192.168.8.101:3000/api'; // real device → PC on same WiFi
     }
