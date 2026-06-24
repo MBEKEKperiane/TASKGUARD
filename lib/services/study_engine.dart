@@ -159,7 +159,10 @@ class StudyEngine {
     Map<String, List<_Interval>> busyByDay,
     Map<String, List<_Interval>> usedByDay,
   ) {
-    final busy = [...(busyByDay[dayKey] ?? []), ...(usedByDay[dayKey] ?? [])];
+    final busy = <_Interval>[
+      ...(busyByDay[dayKey] ?? const <_Interval>[]),
+      ...(usedByDay[dayKey] ?? const <_Interval>[]),
+    ];
 
     for (final preferred in _preferredStartMins) {
       final end = preferred + durationMins;
