@@ -46,6 +46,14 @@ router.post('/reset-password',
   ctrl.resetPassword
 );
 
+router.post('/verify-email',
+  authenticate,
+  body('code').isLength({ min: 6, max: 6 }).withMessage('Code must be 6 digits.'),
+  validate,
+  ctrl.verifyEmail
+);
+router.post('/resend-verification', authenticate, ctrl.resendVerification);
+
 router.get('/me', authenticate, ctrl.getMe);
 router.patch('/me', authenticate, body('name').trim().notEmpty().withMessage('Name is required.'), validate, ctrl.updateMe);
 router.post('/logout', authenticate, ctrl.logout);

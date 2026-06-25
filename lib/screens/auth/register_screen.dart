@@ -42,10 +42,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           (_) => false,
         );
       } else if (next.status == AuthStatus.unverified) {
-        // Registration succeeded but email needs verification
+        // New account created — must enter the 6-digit code before continuing.
         Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-              builder: (_) => const EmailVerificationScreen()),
+          MaterialPageRoute(builder: (_) => const EmailVerificationScreen()),
           (_) => false,
         );
       } else if (next.errorMessage != null &&

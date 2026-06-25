@@ -7,7 +7,9 @@ import '../screens/settings/profile_screen.dart';
 import '../theme/app_colors.dart';
 
 class BottomNavShell extends StatefulWidget {
-  const BottomNavShell({super.key});
+  final bool showLoginSuccessMessage;
+
+  const BottomNavShell({super.key, this.showLoginSuccessMessage = false});
 
   @override
   State<BottomNavShell> createState() => _BottomNavShellState();
@@ -15,6 +17,23 @@ class BottomNavShell extends StatefulWidget {
 
 class _BottomNavShellState extends State<BottomNavShell> {
   int _index = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.showLoginSuccessMessage) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Login successful!'),
+            backgroundColor: AppColors.success,
+            duration: const Duration(seconds: 5),
+          ),
+        );
+      });
+    }
+  }
 
   static const _screens = [
     HomeScreen(),

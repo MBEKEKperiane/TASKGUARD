@@ -5,10 +5,13 @@ import 'local_storage.dart';
 class AuthService {
   final _api = ApiClient();
 
-  // Specifying scopes ensures the ID token is always included in the response.
-  // Add your serverClientId (Web Client ID from Firebase Console → OAuth 2.0)
-  // if idToken comes back null on Android real devices.
-  final _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
+  // serverClientId must be the Web OAuth client ID — the backend verifies the
+  // Google ID token's `aud` claim against this same value (GOOGLE_CLIENT_ID).
+  final _googleSignIn = GoogleSignIn(
+    scopes: ['email', 'profile'],
+    serverClientId:
+        '1022948483427-k3ar0hkrdrsnpgngb23qrius7h2f0lc1.apps.googleusercontent.com',
+  );
 
   Future<Map<String, dynamic>> register({
     required String email,
@@ -77,6 +80,10 @@ class AuthService {
 
   Future<void> resendVerificationEmail() async {
     await _api.post('/auth/resend-verification');
+  }
+
+  Future<void> verifyEmailCode(String code) async {
+    await _api.post('/auth/verify-email', data: {'code': code});
   }
 
   Future<void> forgotPassword(String email) async {

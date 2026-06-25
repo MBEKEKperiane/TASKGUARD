@@ -43,6 +43,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
     try {
       final user =
           await _auth.register(email: email, password: password, name: name);
+      // New accounts must verify their email via the 6-digit code before
+      // reaching the dashboard.
       _applyUser(user);
     } catch (e) {
       state = AuthState(
@@ -81,17 +83,16 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
-  /// Re-fetches the user from the API to check if email has been verified.
-  Future<void> checkVerification() async {
-    try {
-      final user = await _auth.getMe();
-      await LocalStorage.saveUser(user);
-      _applyUser(user);
-    } catch (_) {}
-  }
-
   Future<void> resendVerificationEmail() async {
     await _auth.resendVerificationEmail();
+  }
+
+  /// Submits the 6-digit code. Throws on invalid/expired code.
+  Future<void> verifyEmailCode(String code) async {
+    await _auth.verifyEmailCode(code);
+    final user = await _auth.getMe();
+    await LocalStorage.saveUser(user);
+    state = AuthState(status: AuthStatus.authenticated, user: user);
   }
 
   Future<void> logout() async {

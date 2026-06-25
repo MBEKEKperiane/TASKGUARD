@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../features/auth/models/auth_state.dart';
@@ -18,16 +19,25 @@ class EmailVerificationScreen extends ConsumerStatefulWidget {
 
 class _EmailVerificationScreenState
     extends ConsumerState<EmailVerificationScreen> {
-  bool _checking = false;
+  final _codeCtrl = TextEditingController();
+  bool _verifying = false;
   bool _resending = false;
 
   @override
+  void dispose() {
+    _codeCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // Navigate automatically when the user verifies from another device/tab
     ref.listen<AuthState>(authProvider, (previous, next) {
       if (next.status == AuthStatus.authenticated && mounted) {
         Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => const BottomNavShell()),
+          MaterialPageRoute(
+            builder: (_) =>
+                const BottomNavShell(showLoginSuccessMessage: true),
+          ),
           (_) => false,
         );
       }
@@ -85,7 +95,7 @@ class _EmailVerificationScreenState
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'We sent a verification link to',
+                      'We sent a 6-digit code to',
                       style: GoogleFonts.inter(
                           fontSize: 14, color: AppColors.textSecondary),
                       textAlign: TextAlign.center,
@@ -100,23 +110,40 @@ class _EmailVerificationScreenState
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Click the link in that email to activate your account,\nthen tap the button below.',
-                      style: GoogleFonts.inter(
-                          fontSize: 13,
-                          color: AppColors.textSecondary,
-                          height: 1.5),
+                    const SizedBox(height: 32),
+                    TextField(
+                      controller: _codeCtrl,
+                      keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
+                      maxLength: 6,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      onSubmitted: (_) => _verifyCode(),
+                      style: GoogleFonts.inter(
+                        fontSize: 28,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 12,
+                        color: AppColors.textPrimary,
+                      ),
+                      decoration: InputDecoration(
+                        counterText: '',
+                        hintText: '000000',
+                        hintStyle: GoogleFonts.inter(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 12,
+                          color: AppColors.textSecondary.withValues(alpha: 0.3),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
                     ),
-                    const SizedBox(height: 40),
-                    _checking
-                        ? const CircularProgressIndicator(
-                            color: AppColors.primary)
-                        : _gradientButton(
-                            "I've Verified — Open Dashboard",
-                            onTap: _checkVerification,
-                          ),
+                    const SizedBox(height: 28),
+                    _verifying
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                                color: AppColors.primary))
+                        : _gradientButton('Verify', onTap: _verifyCode),
                     const SizedBox(height: 16),
                     _resending
                         ? const SizedBox(
@@ -125,7 +152,7 @@ class _EmailVerificationScreenState
                                 child: CircularProgressIndicator(
                                     color: AppColors.primary, strokeWidth: 2)))
                         : OutlinedButton.icon(
-                            onPressed: _resendEmail,
+                            onPressed: _resendCode,
                             style: OutlinedButton.styleFrom(
                               foregroundColor: AppColors.primary,
                               side: const BorderSide(color: AppColors.primary),
@@ -134,7 +161,7 @@ class _EmailVerificationScreenState
                                   borderRadius: BorderRadius.circular(14)),
                             ),
                             icon: const Icon(Icons.send_rounded, size: 18),
-                            label: Text('Resend Verification Email',
+                            label: Text('Resend Code',
                                 style: GoogleFonts.inter(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600)),
@@ -154,7 +181,7 @@ class _EmailVerificationScreenState
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              "Check your spam or junk folder if the email doesn't arrive within a few minutes.",
+                              "Check your spam or junk folder if the email doesn't arrive within a few minutes. The code expires in 10 minutes.",
                               style: GoogleFonts.inter(
                                   fontSize: 12,
                                   color: AppColors.primary,
@@ -184,32 +211,30 @@ class _EmailVerificationScreenState
     );
   }
 
-  Future<void> _checkVerification() async {
-    setState(() => _checking = true);
-    await ref.read(authProvider.notifier).checkVerification();
-    if (!mounted) return;
-    setState(() => _checking = false);
-    final status = ref.read(authProvider).status;
-    if (status == AuthStatus.unverified) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Email not verified yet — please check your inbox and spam folder.',
-          ),
-          backgroundColor: AppColors.warning,
-        ),
-      );
+  Future<void> _verifyCode() async {
+    final code = _codeCtrl.text.trim();
+    if (code.length != 6) {
+      _showError('Please enter the 6-digit code.');
+      return;
+    }
+    setState(() => _verifying = true);
+    try {
+      await ref.read(authProvider.notifier).verifyEmailCode(code);
+    } catch (_) {
+      if (mounted) _showError('Invalid or expired code. Please try again.');
+    } finally {
+      if (mounted) setState(() => _verifying = false);
     }
   }
 
-  Future<void> _resendEmail() async {
+  Future<void> _resendCode() async {
     setState(() => _resending = true);
     try {
       await ref.read(authProvider.notifier).resendVerificationEmail();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Verification email sent! Check your inbox.'),
+            content: Text('Code resent! Check your inbox.'),
             backgroundColor: AppColors.success,
           ),
         );
@@ -218,7 +243,7 @@ class _EmailVerificationScreenState
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Failed to resend email. Please try again.'),
+            content: Text('Failed to resend code. Please try again.'),
             backgroundColor: AppColors.error,
           ),
         );
@@ -236,6 +261,13 @@ class _EmailVerificationScreenState
         (_) => false,
       );
     }
+  }
+
+  void _showError(String msg) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg), backgroundColor: AppColors.error),
+    );
   }
 
   Widget _orb(double size, Color color) => Container(

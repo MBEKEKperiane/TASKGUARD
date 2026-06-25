@@ -1,8 +1,12 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 const { OAuth2Client } = require('google-auth-library');
 const prisma = require('../config/database');
+const { sendVerificationEmail } = require('../services/email.service');
+
+const VERIFICATION_CODE_TTL_MS = 10 * 60 * 1000; // 10 minutes
 
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -14,6 +18,19 @@ const generateTokens = (userId) => {
     expiresIn: '30d',
   });
   return { accessToken, refreshToken };
+};
+
+// Generates a fresh 6-digit code for the user, saves it, and emails it.
+const issueVerificationCode = async (user) => {
+  const code = crypto.randomInt(0, 1000000).toString().padStart(6, '0');
+  const verificationTokenExpiry = new Date(Date.now() + VERIFICATION_CODE_TTL_MS);
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { verificationToken: code, verificationTokenExpiry },
+  });
+
+  await sendVerificationEmail(user.email, code);
 };
 
 // POST /api/auth/register
@@ -37,8 +54,10 @@ const register = async (req, res, next) => {
       data: { refreshToken },
     });
 
+    await issueVerificationCode(user);
+
     res.status(201).json({
-      user: { id: user.id, email: user.email, name: user.name },
+      user: { id: user.id, email: user.email, name: user.name, emailVerified: user.emailVerified },
       accessToken,
       refreshToken,
     });
@@ -68,8 +87,18 @@ const login = async (req, res, next) => {
       data: { refreshToken },
     });
 
+    if (!user.emailVerified) {
+      await issueVerificationCode(user);
+    }
+
     res.json({
-      user: { id: user.id, email: user.email, name: user.name, theme: user.theme },
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        theme: user.theme,
+        emailVerified: user.emailVerified,
+      },
       accessToken,
       refreshToken,
     });
@@ -96,12 +125,12 @@ const googleLogin = async (req, res, next) => {
 
     if (!user) {
       user = await prisma.user.create({
-        data: { email, name, googleId },
+        data: { email, name, googleId, emailVerified: true },
       });
     } else if (!user.googleId) {
       user = await prisma.user.update({
         where: { id: user.id },
-        data: { googleId },
+        data: { googleId, emailVerified: true },
       });
     }
 
@@ -112,7 +141,7 @@ const googleLogin = async (req, res, next) => {
     });
 
     res.json({
-      user: { id: user.id, email: user.email, name: user.name },
+      user: { id: user.id, email: user.email, name: user.name, emailVerified: user.emailVerified },
       accessToken,
       refreshToken,
     });
@@ -145,6 +174,54 @@ const refreshToken = async (req, res, next) => {
     if (err.name === 'JsonWebTokenError' || err.name === 'TokenExpiredError') {
       return res.status(401).json({ error: 'Invalid or expired refresh token.' });
     }
+    next(err);
+  }
+};
+
+// POST /api/auth/verify-email  { code }
+const verifyEmail = async (req, res, next) => {
+  try {
+    const { code } = req.body;
+    const user = await prisma.user.findUnique({ where: { id: req.user.id } });
+
+    if (!user) return res.status(404).json({ error: 'User not found.' });
+    if (user.emailVerified) return res.json({ message: 'Email is already verified.' });
+
+    const isValid =
+      code &&
+      user.verificationToken === code &&
+      user.verificationTokenExpiry &&
+      user.verificationTokenExpiry > new Date();
+
+    if (!isValid) {
+      return res.status(400).json({ error: 'Invalid or expired code.' });
+    }
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { emailVerified: true, verificationToken: null, verificationTokenExpiry: null },
+    });
+
+    res.json({ message: 'Email verified successfully.' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// POST /api/auth/resend-verification
+const resendVerification = async (req, res, next) => {
+  try {
+    const user = await prisma.user.findUnique({ where: { id: req.user.id } });
+    if (!user) return res.status(404).json({ error: 'User not found.' });
+
+    if (user.emailVerified) {
+      return res.json({ message: 'Email is already verified.' });
+    }
+
+    await issueVerificationCode(user);
+
+    res.json({ message: 'Verification code sent.' });
+  } catch (err) {
     next(err);
   }
 };
@@ -237,5 +314,6 @@ const logout = async (req, res, next) => {
 
 module.exports = {
   register, login, googleLogin, refreshToken,
+  verifyEmail, resendVerification,
   forgotPassword, resetPassword, getMe, updateMe, logout,
 };
