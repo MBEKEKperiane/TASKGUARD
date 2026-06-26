@@ -8,11 +8,17 @@ console.log(
 const transporter =
   process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD
     ? nodemailer.createTransport({
-        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
         auth: {
           user: process.env.GMAIL_USER,
           pass: process.env.GMAIL_APP_PASSWORD,
         },
+        // Render's network has no outbound IPv6 route, but smtp.gmail.com
+        // resolves to an IPv6 address by default — forcing IPv4 avoids
+        // ENETUNREACH on connect.
+        family: 4,
         // Fail fast instead of hanging if the host's network can't reach
         // Gmail's SMTP servers (some PaaS providers restrict outbound SMTP).
         connectionTimeout: 10000,
