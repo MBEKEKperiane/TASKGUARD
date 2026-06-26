@@ -37,16 +37,26 @@ const issueVerificationCode = async (user) => {
 const register = async (req, res, next) => {
   try {
     const { email, password, name } = req.body;
+    const passwordHash = await bcrypt.hash(password, 12);
 
     const existing = await prisma.user.findUnique({ where: { email } });
+    let user;
     if (existing) {
-      return res.status(409).json({ error: 'Email already registered.' });
+      // A verified account already owns this email — genuinely taken.
+      if (existing.emailVerified) {
+        return res.status(409).json({ error: 'Email already registered.' });
+      }
+      // Previous registration was never verified — let this attempt
+      // claim it fresh instead of permanently locking the email.
+      user = await prisma.user.update({
+        where: { id: existing.id },
+        data: { name, passwordHash },
+      });
+    } else {
+      user = await prisma.user.create({
+        data: { email, name, passwordHash },
+      });
     }
-
-    const passwordHash = await bcrypt.hash(password, 12);
-    const user = await prisma.user.create({
-      data: { email, name, passwordHash },
-    });
 
     const { accessToken, refreshToken } = generateTokens(user.id);
     await prisma.user.update({
