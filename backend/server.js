@@ -17,6 +17,10 @@ const { sendPendingReminders } = require('./src/services/notification.service');
 
 const app = express();
 
+// Render sits behind a reverse proxy — trust its X-Forwarded-For header so
+// express-rate-limit and req.ip resolve the real client IP, not Render's.
+app.set('trust proxy', 1);
+
 // Security & logging
 app.use(helmet());
 app.use(morgan('dev'));
