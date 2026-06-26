@@ -30,7 +30,10 @@ const issueVerificationCode = async (user) => {
     data: { verificationToken: code, verificationTokenExpiry },
   });
 
-  await sendVerificationEmail(user.email, code);
+  // Fire-and-forget — an SMTP connection that's slow or blocked outbound
+  // must never hold up the HTTP response. Failures are logged internally
+  // by sendVerificationEmail.
+  sendVerificationEmail(user.email, code);
 };
 
 // POST /api/auth/register
