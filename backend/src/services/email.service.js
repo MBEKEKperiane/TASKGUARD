@@ -1,24 +1,25 @@
-const { Resend } = require('resend');
+const nodemailer = require('nodemailer');
 
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+const transporter =
+  process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD
+    ? nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.GMAIL_USER,
+          pass: process.env.GMAIL_APP_PASSWORD,
+        },
+      })
+    : null;
 
 const sendVerificationEmail = async (to, code) => {
-  if (!resend) {
-    console.warn('[Email] RESEND_API_KEY not set — skipping verification email.');
+  if (!transporter) {
+    console.warn('[Email] GMAIL_USER/GMAIL_APP_PASSWORD not set — skipping verification email.');
     return;
   }
 
-  // process.env.EMAIL_FROM is trimmed and stripped of accidental wrapping
-  // quotes — some dashboards store pasted values with literal quote chars,
-  // which Resend's API rejects as an invalid sender without throwing.
-  const from = (process.env.EMAIL_FROM || 'TaskGuard AI <onboarding@resend.dev>')
-    .trim()
-    .replace(/^"(.*)"$/, '$1')
-    .replace(/^'(.*)'$/, '$1');
-
   try {
-    const { data, error } = await resend.emails.send({
-      from,
+    const info = await transporter.sendMail({
+      from: `TaskGuard AI <${process.env.GMAIL_USER}>`,
       to,
       subject: 'Your TaskGuard AI verification code',
       html: `
@@ -30,11 +31,7 @@ const sendVerificationEmail = async (to, code) => {
         </div>
       `,
     });
-    if (error) {
-      console.error('[Email] Resend rejected the send:', JSON.stringify(error));
-    } else {
-      console.log('[Email] Verification code sent, id:', data?.id);
-    }
+    console.log('[Email] Verification code sent, id:', info.messageId);
   } catch (err) {
     console.error('[Email] Failed to send verification email:', err.message);
   }
