@@ -27,10 +27,15 @@ class ApiClient {
 
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
-        final token = await _storage.read(key: 'access_token');
-        if (token != null) {
-          options.headers['Authorization'] = 'Bearer $token';
-        }
+        // A secure-storage read failure (e.g. a web Web-Crypto decrypt race,
+        // or a Keystore hiccup on Android) must not block the whole request
+        // pipeline — fall back to sending the request unauthenticated.
+        try {
+          final token = await _storage.read(key: 'access_token');
+          if (token != null) {
+            options.headers['Authorization'] = 'Bearer $token';
+          }
+        } catch (_) {}
         handler.next(options);
       },
       onError: (err, handler) async {
@@ -92,6 +97,9 @@ class ApiClient {
     ]);
   }
 
+  // Deliberately unguarded: a read failure here must propagate so that
+  // AuthNotifier.initialize() falls back to the cached user instead of
+  // treating a transient storage error as "no session".
   Future<bool> get hasToken async {
     final token = await _storage.read(key: 'access_token');
     return token != null;

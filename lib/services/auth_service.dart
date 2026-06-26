@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'api_client.dart';
 import 'local_storage.dart';
@@ -7,10 +8,13 @@ class AuthService {
 
   // serverClientId must be the Web OAuth client ID — the backend verifies the
   // Google ID token's `aud` claim against this same value (GOOGLE_CLIENT_ID).
+  // On web the plugin rejects serverClientId outright; the same client ID is
+  // instead supplied via the <meta name="google-signin-client_id"> tag.
   final _googleSignIn = GoogleSignIn(
     scopes: ['email', 'profile'],
-    serverClientId:
-        '1022948483427-k3ar0hkrdrsnpgngb23qrius7h2f0lc1.apps.googleusercontent.com',
+    serverClientId: kIsWeb
+        ? null
+        : '1022948483427-k3ar0hkrdrsnpgngb23qrius7h2f0lc1.apps.googleusercontent.com',
   );
 
   Future<Map<String, dynamic>> register({

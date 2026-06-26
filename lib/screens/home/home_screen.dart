@@ -116,11 +116,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _load() async {
-    await _taskService.syncPendingOps();
-
-    // Tasks always load — getTodayTasks() handles offline internally.
-    // This must happen before the auth check so new tasks are always visible.
-    final tasks = await _taskService.getTodayTasks();
+    List<dynamic> tasks;
+    try {
+      await _taskService.syncPendingOps();
+      // Tasks always load — getTodayTasks() handles offline internally.
+      // This must happen before the auth check so new tasks are always visible.
+      tasks = await _taskService.getTodayTasks();
+    } catch (_) {
+      // Anything unexpected (e.g. a secure-storage read failure) must not
+      // leave the screen stuck on its loading spinner forever.
+      tasks = LocalStorage.getTodayTasks();
+      if (mounted) setState(() { _loading = false; _isOffline = true; });
+    }
     if (mounted) {
       final now = DateTime.now();
       final allTasks = LocalStorage.getAllTasks();
