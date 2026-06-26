@@ -20,8 +20,10 @@ class ApiClient {
   ApiClient._internal() {
     _dio = Dio(BaseOptions(
       baseUrl: _baseUrl,
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 20),
+      // Render's free tier spins the backend down when idle; the first
+      // request after that can take 30-50s to wake it back up.
+      connectTimeout: const Duration(seconds: 60),
+      receiveTimeout: const Duration(seconds: 60),
       headers: {'Content-Type': 'application/json'},
     ));
 
@@ -51,6 +53,24 @@ class ApiClient {
             }
           } catch (_) {}
         }
+
+        // Render's free tier can take well over a minute to wake from idle.
+        // The very first request after a cold start commonly times out while
+        // the instance boots, but an immediate retry succeeds instantly once
+        // it's up — so retry once before surfacing "no internet" to the user.
+        final isTimeout = err.type == DioExceptionType.connectionTimeout ||
+            err.type == DioExceptionType.receiveTimeout ||
+            err.type == DioExceptionType.connectionError;
+        final alreadyRetried =
+            err.requestOptions.extra['retried_cold_start'] == true;
+        if (isTimeout && !alreadyRetried) {
+          try {
+            err.requestOptions.extra['retried_cold_start'] = true;
+            final retry = await _dio.fetch(err.requestOptions);
+            return handler.resolve(retry);
+          } catch (_) {}
+        }
+
         handler.next(err);
       },
     ));

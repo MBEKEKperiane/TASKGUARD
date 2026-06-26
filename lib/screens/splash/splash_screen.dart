@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../features/auth/models/auth_state.dart';
 import '../../features/auth/providers/auth_provider.dart';
+import '../../services/api_client.dart';
 import '../../theme/app_colors.dart';
 import '../../widgets/bottom_nav_shell.dart';
 import '../auth/email_verification_screen.dart';
@@ -35,7 +36,17 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       CurvedAnimation(parent: _controller, curve: Curves.elasticOut),
     );
     _controller.forward();
+    _warmUpBackend();
     _initAuth();
+  }
+
+  /// Render's free tier spins the backend down when idle. Fire a
+  /// fire-and-forget request as early as possible so it's awake by the
+  /// time the user reaches login/register.
+  void _warmUpBackend() async {
+    try {
+      await ApiClient().get('/auth/me');
+    } catch (_) {}
   }
 
   Future<void> _initAuth() async {
