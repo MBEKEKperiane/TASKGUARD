@@ -1,41 +1,53 @@
 const nodemailer = require('nodemailer');
+const dns = require('dns').promises;
 
 console.log(
   '[Email] Module loaded. GMAIL_USER set:', !!process.env.GMAIL_USER,
   '| GMAIL_APP_PASSWORD set:', !!process.env.GMAIL_APP_PASSWORD
 );
 
-const transporter =
-  process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD
-    ? nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 587,
-        secure: false,
-        requireTLS: true,
-        auth: {
-          user: process.env.GMAIL_USER,
-          pass: process.env.GMAIL_APP_PASSWORD,
-        },
-        // Render's network has no outbound IPv6 route, but smtp.gmail.com
-        // resolves to an IPv6 address by default — forcing IPv4 avoids
-        // ENETUNREACH on connect.
-        family: 4,
-        // Fail fast instead of hanging if the host's network can't reach
-        // Gmail's SMTP servers (some PaaS providers restrict outbound SMTP).
-        connectionTimeout: 10000,
-        greetingTimeout: 10000,
-        socketTimeout: 10000,
-      })
-    : null;
+const hasCreds = !!(process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD);
+
+let cachedTransporter = null;
+
+// Render's network has no outbound IPv6 route, but smtp.gmail.com resolves
+// to an IPv6 address by default and nodemailer's `family` option doesn't
+// reliably override that. Resolving the A record ourselves and connecting
+// to the literal IPv4 address sidesteps it; `tls.servername` keeps TLS
+// certificate validation working against the real hostname.
+const getTransporter = async () => {
+  if (cachedTransporter) return cachedTransporter;
+
+  const addresses = await dns.resolve4('smtp.gmail.com');
+  const ipv4Host = addresses[0];
+  console.log('[Email] Resolved smtp.gmail.com ->', ipv4Host);
+
+  cachedTransporter = nodemailer.createTransport({
+    host: ipv4Host,
+    port: 587,
+    secure: false,
+    requireTLS: true,
+    tls: { servername: 'smtp.gmail.com' },
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_APP_PASSWORD,
+    },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 10000,
+  });
+  return cachedTransporter;
+};
 
 const sendVerificationEmail = async (to, code) => {
   console.log('[Email] sendVerificationEmail called for', to);
-  if (!transporter) {
+  if (!hasCreds) {
     console.warn('[Email] GMAIL_USER/GMAIL_APP_PASSWORD not set — skipping verification email.');
     return;
   }
 
   try {
+    const transporter = await getTransporter();
     const info = await transporter.sendMail({
       from: `TaskGuard AI <${process.env.GMAIL_USER}>`,
       to,
