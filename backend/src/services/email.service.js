@@ -8,9 +8,17 @@ const sendVerificationEmail = async (to, code) => {
     return;
   }
 
+  // process.env.EMAIL_FROM is trimmed and stripped of accidental wrapping
+  // quotes — some dashboards store pasted values with literal quote chars,
+  // which Resend's API rejects as an invalid sender without throwing.
+  const from = (process.env.EMAIL_FROM || 'TaskGuard AI <onboarding@resend.dev>')
+    .trim()
+    .replace(/^"(.*)"$/, '$1')
+    .replace(/^'(.*)'$/, '$1');
+
   try {
-    await resend.emails.send({
-      from: process.env.EMAIL_FROM || 'TaskGuard AI <onboarding@resend.dev>',
+    const { data, error } = await resend.emails.send({
+      from,
       to,
       subject: 'Your TaskGuard AI verification code',
       html: `
@@ -22,6 +30,11 @@ const sendVerificationEmail = async (to, code) => {
         </div>
       `,
     });
+    if (error) {
+      console.error('[Email] Resend rejected the send:', JSON.stringify(error));
+    } else {
+      console.log('[Email] Verification code sent, id:', data?.id);
+    }
   } catch (err) {
     console.error('[Email] Failed to send verification email:', err.message);
   }
