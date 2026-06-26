@@ -1,5 +1,10 @@
 const nodemailer = require('nodemailer');
 
+console.log(
+  '[Email] Module loaded. GMAIL_USER set:', !!process.env.GMAIL_USER,
+  '| GMAIL_APP_PASSWORD set:', !!process.env.GMAIL_APP_PASSWORD
+);
+
 const transporter =
   process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD
     ? nodemailer.createTransport({
@@ -17,6 +22,7 @@ const transporter =
     : null;
 
 const sendVerificationEmail = async (to, code) => {
+  console.log('[Email] sendVerificationEmail called for', to);
   if (!transporter) {
     console.warn('[Email] GMAIL_USER/GMAIL_APP_PASSWORD not set — skipping verification email.');
     return;
