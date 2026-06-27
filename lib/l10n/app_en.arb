@@ -51,5 +51,19 @@
   "invalidOrExpiredCode": "Invalid or expired code. Please try again.",
   "codeResentCheckInbox": "Code resent! Check your inbox.",
   "failedToResendCode": "Failed to resend code. Please try again.",
-  "loginSuccessful": "Login successful!"
+  "loginSuccessful": "Login successful!",
+
+  "settings": "Settings",
+  "manageYourPreferences": "Manage your preferences.",
+  "notifications": "Notifications",
+  "notificationsSubtitle": "Alerts, email & push preferences",
+  "theme": "Theme",
+  "themeSubtitle": "Light, dark & colour options",
+  "language": "Language",
+  "languageSubtitle": "App display language",
+  "privacySettings": "Privacy Settings",
+  "privacySettingsSubtitle": "Data security & AI training controls",
+  "accountSettings": "Account Settings",
+  "accountSettingsSubtitle": "Profile, wellness & sign out",
+  "selectPreferredLanguage": "Select your preferred language."
 }

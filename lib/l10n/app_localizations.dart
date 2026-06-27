@@ -367,6 +367,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Login successful!'**
   String get loginSuccessful;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @manageYourPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your preferences.'**
+  String get manageYourPreferences;
+
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// No description provided for @notificationsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Alerts, email & push preferences'**
+  String get notificationsSubtitle;
+
+  /// No description provided for @theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme;
+
+  /// No description provided for @themeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Light, dark & colour options'**
+  String get themeSubtitle;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @languageSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'App display language'**
+  String get languageSubtitle;
+
+  /// No description provided for @privacySettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Settings'**
+  String get privacySettings;
+
+  /// No description provided for @privacySettingsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Data security & AI training controls'**
+  String get privacySettingsSubtitle;
+
+  /// No description provided for @accountSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Settings'**
+  String get accountSettings;
+
+  /// No description provided for @accountSettingsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile, wellness & sign out'**
+  String get accountSettingsSubtitle;
+
+  /// No description provided for @selectPreferredLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your preferred language.'**
+  String get selectPreferredLanguage;
 }
 
 class _AppLocalizationsDelegate

@@ -154,4 +154,44 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get loginSuccessful => 'Connexion réussie !';
+
+  @override
+  String get settings => 'Paramètres';
+
+  @override
+  String get manageYourPreferences => 'Gérez vos préférences.';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get notificationsSubtitle => 'Alertes, préférences e-mail et push';
+
+  @override
+  String get theme => 'Thème';
+
+  @override
+  String get themeSubtitle => 'Options clair, sombre et couleur';
+
+  @override
+  String get language => 'Langue';
+
+  @override
+  String get languageSubtitle => 'Langue d\'affichage de l\'application';
+
+  @override
+  String get privacySettings => 'Paramètres de confidentialité';
+
+  @override
+  String get privacySettingsSubtitle =>
+      'Sécurité des données et contrôles d\'entraînement IA';
+
+  @override
+  String get accountSettings => 'Paramètres du compte';
+
+  @override
+  String get accountSettingsSubtitle => 'Profil, bien-être et déconnexion';
+
+  @override
+  String get selectPreferredLanguage => 'Sélectionnez votre langue préférée.';
 }

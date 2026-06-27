@@ -148,4 +148,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loginSuccessful => 'Login successful!';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get manageYourPreferences => 'Manage your preferences.';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get notificationsSubtitle => 'Alerts, email & push preferences';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get themeSubtitle => 'Light, dark & colour options';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get languageSubtitle => 'App display language';
+
+  @override
+  String get privacySettings => 'Privacy Settings';
+
+  @override
+  String get privacySettingsSubtitle => 'Data security & AI training controls';
+
+  @override
+  String get accountSettings => 'Account Settings';
+
+  @override
+  String get accountSettingsSubtitle => 'Profile, wellness & sign out';
+
+  @override
+  String get selectPreferredLanguage => 'Select your preferred language.';
 }

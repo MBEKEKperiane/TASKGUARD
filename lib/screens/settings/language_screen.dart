@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../features/locale/providers/locale_provider.dart';
+import '../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 
 class LanguageScreen extends ConsumerWidget {
@@ -15,6 +16,7 @@ class LanguageScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selected = ref.watch(localeProvider).languageCode;
+    final t = AppLocalizations.of(context);
 
     return Scaffold(
       backgroundColor: context.colBg,
@@ -27,7 +29,7 @@ class LanguageScreen extends ConsumerWidget {
               color: context.colText1, size: 20),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Language',
+        title: Text(t.language,
             style: GoogleFonts.inter(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
@@ -36,7 +38,7 @@ class LanguageScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          Text('Select your preferred language.',
+          Text(t.selectPreferredLanguage,
               style: GoogleFonts.inter(fontSize: 13, color: context.colText2)),
           const SizedBox(height: 16),
           ..._languages.map((lang) {

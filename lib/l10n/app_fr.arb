@@ -48,5 +48,19 @@
   "invalidOrExpiredCode": "Code invalide ou expiré. Veuillez réessayer.",
   "codeResentCheckInbox": "Code renvoyé ! Vérifiez votre boîte de réception.",
   "failedToResendCode": "Échec de l'envoi du code. Veuillez réessayer.",
-  "loginSuccessful": "Connexion réussie !"
+  "loginSuccessful": "Connexion réussie !",
+
+  "settings": "Paramètres",
+  "manageYourPreferences": "Gérez vos préférences.",
+  "notifications": "Notifications",
+  "notificationsSubtitle": "Alertes, préférences e-mail et push",
+  "theme": "Thème",
+  "themeSubtitle": "Options clair, sombre et couleur",
+  "language": "Langue",
+  "languageSubtitle": "Langue d'affichage de l'application",
+  "privacySettings": "Paramètres de confidentialité",
+  "privacySettingsSubtitle": "Sécurité des données et contrôles d'entraînement IA",
+  "accountSettings": "Paramètres du compte",
+  "accountSettingsSubtitle": "Profil, bien-être et déconnexion",
+  "selectPreferredLanguage": "Sélectionnez votre langue préférée."
 }

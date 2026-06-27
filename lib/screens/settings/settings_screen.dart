@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 import '../../widgets/app_header.dart';
 import 'language_screen.dart';
@@ -13,6 +14,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: context.colBg,
       appBar: AppHeader(onSettingsTap: () {}),
@@ -21,21 +23,21 @@ class SettingsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Settings',
+            Text(t.settings,
                 style: GoogleFonts.inter(
                     fontSize: 26,
                     fontWeight: FontWeight.w800,
                     color: context.colText1)),
             const SizedBox(height: 4),
-            Text('Manage your preferences.',
+            Text(t.manageYourPreferences,
                 style:
                     GoogleFonts.inter(fontSize: 14, color: context.colText2)),
             const SizedBox(height: 28),
             _tile(
               context: context,
               icon: Icons.notifications_outlined,
-              label: 'Notifications',
-              subtitle: 'Alerts, email & push preferences',
+              label: t.notifications,
+              subtitle: t.notificationsSubtitle,
               onTap: () => Navigator.push(context,
                   MaterialPageRoute(
                       builder: (_) => const NotificationsScreen())),
@@ -44,8 +46,8 @@ class SettingsScreen extends StatelessWidget {
             _tile(
               context: context,
               icon: Icons.palette_outlined,
-              label: 'Theme',
-              subtitle: 'Light, dark & colour options',
+              label: t.theme,
+              subtitle: t.themeSubtitle,
               onTap: () => Navigator.push(context,
                   MaterialPageRoute(builder: (_) => const ThemeScreen())),
             ),
@@ -53,8 +55,8 @@ class SettingsScreen extends StatelessWidget {
             _tile(
               context: context,
               icon: Icons.language_outlined,
-              label: 'Language',
-              subtitle: 'App display language',
+              label: t.language,
+              subtitle: t.languageSubtitle,
               onTap: () => Navigator.push(context,
                   MaterialPageRoute(
                       builder: (_) => const LanguageScreen())),
@@ -63,8 +65,8 @@ class SettingsScreen extends StatelessWidget {
             _tile(
               context: context,
               icon: Icons.shield_outlined,
-              label: 'Privacy Settings',
-              subtitle: 'Data security & AI training controls',
+              label: t.privacySettings,
+              subtitle: t.privacySettingsSubtitle,
               onTap: () => Navigator.push(context,
                   MaterialPageRoute(builder: (_) => const PrivacyScreen())),
             ),
@@ -72,8 +74,8 @@ class SettingsScreen extends StatelessWidget {
             _tile(
               context: context,
               icon: Icons.manage_accounts_outlined,
-              label: 'Account Settings',
-              subtitle: 'Profile, wellness & sign out',
+              label: t.accountSettings,
+              subtitle: t.accountSettingsSubtitle,
               onTap: () => Navigator.push(context,
                   MaterialPageRoute(builder: (_) => const ProfileScreen())),
             ),
