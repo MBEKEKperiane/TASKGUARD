@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import '../../features/burnout/models/burnout_result.dart';
 import '../../features/mood/models/mood_entry.dart';
+import '../../l10n/app_localizations.dart';
 import '../../services/auth_service.dart';
 import '../../features/break_reminder/models/break_reminder_result.dart';
 import '../../services/break_reminder_engine.dart';
@@ -55,6 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final _taskService = TaskService();
   final _insightsService = InsightsService();
   final _authService = AuthService();
+
+  AppLocalizations get t => AppLocalizations.of(context);
 
   List<dynamic> _todayTasks = [];
   final List<dynamic> _completedTasks = [];
@@ -207,9 +210,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String _greeting() {
     final hour = DateTime.now().hour;
-    if (hour < 12) return 'Good Morning';
-    if (hour < 17) return 'Good Afternoon';
-    return 'Good Evening';
+    if (hour < 12) return t.goodMorning;
+    if (hour < 17) return t.goodAfternoon;
+    return t.goodEvening;
   }
 
   FocusSuggestion get _suggestion => SuggestionEngine.generate(
@@ -289,13 +292,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('${_greeting()}, $_userName.',
+                          Text(t.greetingWithName(_greeting(), _userName),
                               style: GoogleFonts.inter(
                                   fontSize: 24,
                                   fontWeight: FontWeight.w800,
                                   color: context.colText1)),
                           const SizedBox(height: 4),
-                          Text('You have $pendingCount priority tasks today.',
+                          Text(t.priorityTasksToday(pendingCount),
                               style: GoogleFonts.inter(
                                   fontSize: 14,
                                   color: context.colText2)),
@@ -322,7 +325,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           fontSize: 36,
                                           fontWeight: FontWeight.w800,
                                           color: AppColors.primary)),
-                                  Text('PRODUCTIVITY',
+                                  Text(t.productivityLabel,
                                       style: GoogleFonts.inter(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w600,
@@ -334,7 +337,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(height: 32),
                           Row(children: [
-                            Text('Smart Suggestions',
+                            Text(t.smartSuggestions,
                                 style: GoogleFonts.inter(
                                     fontSize: 17,
                                     fontWeight: FontWeight.w700,
@@ -349,7 +352,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             description: _suggestion.description,
                             durationMins: _suggestion.durationMins,
                             actionLabel:
-                                'Accept · ${_suggestion.durationMins} min',
+                                t.acceptDuration(_suggestion.durationMins),
                             filled: true,
                             onAction: () => Navigator.of(context).push(
                               MaterialPageRoute(
@@ -402,7 +405,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 10),
                           _deadlineBanner(),
                           const SizedBox(height: 28),
-                          Text('Upcoming Tasks',
+                          Text(t.upcomingTasks,
                               style: GoogleFonts.inter(
                                   fontSize: 17,
                                   fontWeight: FontWeight.w700,
@@ -418,8 +421,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: const EdgeInsets.symmetric(vertical: 24),
                                 child: Text(
                                   _todayTasks.isEmpty
-                                      ? 'No pending tasks — great job!'
-                                      : 'Rest up — only urgent tasks shown today.',
+                                      ? t.noPendingTasks
+                                      : t.restUpUrgentOnly,
                                   style: GoogleFonts.inter(
                                       color: context.colHint)),
                               ),
@@ -432,7 +435,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           if (_completedTasks.isNotEmpty) ...[
                             const SizedBox(height: 28),
                             Row(children: [
-                              Text('Completed Today',
+                              Text(t.completedToday,
                                   style: GoogleFonts.inter(
                                       fontSize: 17,
                                       fontWeight: FontWeight.w700,
@@ -474,7 +477,7 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(
             color: context.colPrimaryC,
             borderRadius: BorderRadius.circular(12)),
-        child: Text('AI Powered',
+        child: Text(t.aiPowered,
             style: GoogleFonts.inter(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
@@ -555,7 +558,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  'How are you feeling today?',
+                  t.howAreYouFeeling,
                   style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
@@ -646,12 +649,12 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('AI Priority Queue',
+                  Text(t.aiPriorityQueue,
                       style: GoogleFonts.inter(
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
                           color: context.colText1)),
-                  Text('See which of your $pending tasks to do first',
+                  Text(t.seeWhichTasksFirst(pending),
                       style: GoogleFonts.inter(
                           fontSize: 12, color: context.colText2)),
                 ],
@@ -693,12 +696,12 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Productivity Reports',
+                  Text(t.productivityReports,
                       style: GoogleFonts.inter(
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
                           color: context.colText1)),
-                  Text('Daily & weekly breakdowns with charts',
+                  Text(t.dailyWeeklyBreakdowns,
                       style: GoogleFonts.inter(
                           fontSize: 12, color: context.colText2)),
                 ],
@@ -740,12 +743,12 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('AI Schedule',
+                  Text(t.aiSchedule,
                       style: GoogleFonts.inter(
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
                           color: context.colText1)),
-                  Text('Optimised day plan from your tasks',
+                  Text(t.optimisedDayPlan,
                       style: GoogleFonts.inter(
                           fontSize: 12, color: context.colText2)),
                 ],
@@ -790,13 +793,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '$_overdueCount overdue task${_overdueCount > 1 ? "s" : ""}',
+                    t.overdueTasksCount(_overdueCount),
                     style: GoogleFonts.inter(
                         fontSize: 13,
                         fontWeight: FontWeight.w700,
                         color: context.colText1),
                   ),
-                  Text('Tap to reschedule now',
+                  Text(t.tapToRescheduleNow,
                       style: GoogleFonts.inter(
                           fontSize: 12, color: context.colText2)),
                 ],
@@ -865,15 +868,15 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Teams',
+                  Text(t.teams,
                       style: GoogleFonts.inter(
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
                           color: context.colText1)),
                   Text(
                     badgeCount > 0
-                        ? '$badgeCount update${badgeCount > 1 ? "s" : ""} waiting'
-                        : 'Share and assign tasks with others',
+                        ? t.updatesWaiting(badgeCount)
+                        : t.shareAndAssignTasks,
                     style: GoogleFonts.inter(
                         fontSize: 12, color: context.colText2),
                   ),
@@ -962,15 +965,15 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Study Mode',
+                Text(t.studyMode,
                     style: GoogleFonts.inter(
                         fontSize: 13,
                         fontWeight: FontWeight.w700,
                         color: context.colText1)),
                 Text(
                   urgentCount > 0
-                      ? '$urgentCount item${urgentCount > 1 ? "s" : ""} need attention'
-                      : 'Assignments, exams & revision plans',
+                      ? t.itemsNeedAttention(urgentCount)
+                      : t.assignmentsExamsRevision,
                   style: GoogleFonts.inter(
                       fontSize: 12, color: context.colText2),
                 ),
@@ -1026,7 +1029,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
-                  'Lv. $level',
+                  t.levelShort(level),
                   style: GoogleFonts.inter(
                       fontSize: 11,
                       fontWeight: FontWeight.w800,
@@ -1097,7 +1100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   size: 12, color: context.colHint),
               const SizedBox(width: 4),
               Text(
-                '$earnedCount badge${earnedCount != 1 ? "s" : ""} earned',
+                t.badgesEarned(earnedCount),
                 style: GoogleFonts.inter(
                     fontSize: 11, color: context.colText2),
               ),
@@ -1106,7 +1109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   size: 12, color: context.colHint),
               const SizedBox(width: 4),
               Text(
-                '${data.totalTasksCompleted} tasks done',
+                t.tasksDone(data.totalTasksCompleted),
                 style: GoogleFonts.inter(
                     fontSize: 11, color: context.colText2),
               ),
@@ -1163,12 +1166,12 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Health Check-in',
+                  Text(t.healthCheckIn,
                       style: GoogleFonts.inter(
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
                           color: context.colText1)),
-                  Text("Log sleep & energy for today's workload plan",
+                  Text(t.logSleepEnergy,
                       style: GoogleFonts.inter(
                           fontSize: 12, color: context.colText2)),
                 ],
@@ -1284,7 +1287,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '$count deadline${count > 1 ? "s" : ""} need attention',
+                  t.deadlinesNeedAttention(count),
                   style: GoogleFonts.inter(
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
@@ -1379,7 +1382,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: AppColors.primary.withValues(alpha: 0.10),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Text('$durationMins min',
+                child: Text(t.minutesShort(durationMins),
                     style: GoogleFonts.inter(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,

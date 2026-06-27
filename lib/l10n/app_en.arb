@@ -65,5 +65,60 @@
   "privacySettingsSubtitle": "Data security & AI training controls",
   "accountSettings": "Account Settings",
   "accountSettingsSubtitle": "Profile, wellness & sign out",
-  "selectPreferredLanguage": "Select your preferred language."
+  "selectPreferredLanguage": "Select your preferred language.",
+
+  "goodMorning": "Good Morning",
+  "goodAfternoon": "Good Afternoon",
+  "goodEvening": "Good Evening",
+  "greetingWithName": "{greeting}, {name}.",
+  "@greetingWithName": {
+    "placeholders": { "greeting": { "type": "String" }, "name": { "type": "String" } }
+  },
+  "priorityTasksToday": "You have {count} priority tasks today.",
+  "@priorityTasksToday": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "smartSuggestions": "Smart Suggestions",
+  "productivityLabel": "PRODUCTIVITY",
+  "acceptDuration": "Accept · {mins} min",
+  "@acceptDuration": {
+    "placeholders": { "mins": { "type": "int" } }
+  },
+  "upcomingTasks": "Upcoming Tasks",
+  "noPendingTasks": "No pending tasks — great job!",
+  "restUpUrgentOnly": "Rest up — only urgent tasks shown today.",
+  "completedToday": "Completed Today",
+  "aiPowered": "AI Powered",
+  "howAreYouFeeling": "How are you feeling today?",
+
+  "aiPriorityQueue": "AI Priority Queue",
+  "seeWhichTasksFirst": "See which of your {pending} tasks to do first",
+  "@seeWhichTasksFirst": { "placeholders": { "pending": { "type": "int" } } },
+  "productivityReports": "Productivity Reports",
+  "dailyWeeklyBreakdowns": "Daily & weekly breakdowns with charts",
+  "aiSchedule": "AI Schedule",
+  "optimisedDayPlan": "Optimised day plan from your tasks",
+  "overdueTasksCount": "{count, plural, =1{1 overdue task} other{{count} overdue tasks}}",
+  "@overdueTasksCount": { "placeholders": { "count": { "type": "int" } } },
+  "tapToRescheduleNow": "Tap to reschedule now",
+  "teams": "Teams",
+  "updatesWaiting": "{count, plural, =1{1 update waiting} other{{count} updates waiting}}",
+  "@updatesWaiting": { "placeholders": { "count": { "type": "int" } } },
+  "shareAndAssignTasks": "Share and assign tasks with others",
+  "studyMode": "Study Mode",
+  "itemsNeedAttention": "{count, plural, =1{1 item needs attention} other{{count} items need attention}}",
+  "@itemsNeedAttention": { "placeholders": { "count": { "type": "int" } } },
+  "assignmentsExamsRevision": "Assignments, exams & revision plans",
+  "levelShort": "Lv. {level}",
+  "@levelShort": { "placeholders": { "level": { "type": "int" } } },
+  "badgesEarned": "{count, plural, =1{1 badge earned} other{{count} badges earned}}",
+  "@badgesEarned": { "placeholders": { "count": { "type": "int" } } },
+  "tasksDone": "{count} tasks done",
+  "@tasksDone": { "placeholders": { "count": { "type": "int" } } },
+  "healthCheckIn": "Health Check-in",
+  "logSleepEnergy": "Log sleep & energy for today's workload plan",
+  "deadlinesNeedAttention": "{count, plural, =1{1 deadline needs attention} other{{count} deadlines need attention}}",
+  "@deadlinesNeedAttention": { "placeholders": { "count": { "type": "int" } } },
+  "minutesShort": "{mins} min",
+  "@minutesShort": { "placeholders": { "mins": { "type": "int" } } }
 }

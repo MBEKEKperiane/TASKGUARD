@@ -194,4 +194,169 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get selectPreferredLanguage => 'Sélectionnez votre langue préférée.';
+
+  @override
+  String get goodMorning => 'Bonjour';
+
+  @override
+  String get goodAfternoon => 'Bon après-midi';
+
+  @override
+  String get goodEvening => 'Bonsoir';
+
+  @override
+  String greetingWithName(String greeting, String name) {
+    return '$greeting, $name.';
+  }
+
+  @override
+  String priorityTasksToday(int count) {
+    return 'Vous avez $count tâches prioritaires aujourd\'hui.';
+  }
+
+  @override
+  String get smartSuggestions => 'Suggestions intelligentes';
+
+  @override
+  String get productivityLabel => 'PRODUCTIVITÉ';
+
+  @override
+  String acceptDuration(int mins) {
+    return 'Accepter · $mins min';
+  }
+
+  @override
+  String get upcomingTasks => 'Tâches à venir';
+
+  @override
+  String get noPendingTasks => 'Aucune tâche en attente — excellent travail !';
+
+  @override
+  String get restUpUrgentOnly =>
+      'Détendez-vous — seules les tâches urgentes sont affichées aujourd\'hui.';
+
+  @override
+  String get completedToday => 'Terminées aujourd\'hui';
+
+  @override
+  String get aiPowered => 'Propulsé par l\'IA';
+
+  @override
+  String get howAreYouFeeling => 'Comment vous sentez-vous aujourd\'hui ?';
+
+  @override
+  String get aiPriorityQueue => 'File de priorité IA';
+
+  @override
+  String seeWhichTasksFirst(int pending) {
+    return 'Découvrez lesquelles de vos $pending tâches faire en premier';
+  }
+
+  @override
+  String get productivityReports => 'Rapports de productivité';
+
+  @override
+  String get dailyWeeklyBreakdowns =>
+      'Analyses quotidiennes et hebdomadaires avec graphiques';
+
+  @override
+  String get aiSchedule => 'Planning IA';
+
+  @override
+  String get optimisedDayPlan =>
+      'Plan de journée optimisé à partir de vos tâches';
+
+  @override
+  String overdueTasksCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tâches en retard',
+      one: '1 tâche en retard',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tapToRescheduleNow => 'Appuyez pour replanifier maintenant';
+
+  @override
+  String get teams => 'Équipes';
+
+  @override
+  String updatesWaiting(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mises à jour en attente',
+      one: '1 mise à jour en attente',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get shareAndAssignTasks =>
+      'Partagez et assignez des tâches à d\'autres';
+
+  @override
+  String get studyMode => 'Mode étude';
+
+  @override
+  String itemsNeedAttention(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count éléments nécessitent votre attention',
+      one: '1 élément nécessite votre attention',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get assignmentsExamsRevision =>
+      'Devoirs, examens et plans de révision';
+
+  @override
+  String levelShort(int level) {
+    return 'Niv. $level';
+  }
+
+  @override
+  String badgesEarned(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count badges obtenus',
+      one: '1 badge obtenu',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String tasksDone(int count) {
+    return '$count tâches terminées';
+  }
+
+  @override
+  String get healthCheckIn => 'Bilan de santé';
+
+  @override
+  String get logSleepEnergy =>
+      'Enregistrez le sommeil et l\'énergie pour le plan de charge du jour';
+
+  @override
+  String deadlinesNeedAttention(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count échéances nécessitent votre attention',
+      one: '1 échéance nécessite votre attention',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String minutesShort(int mins) {
+    return '$mins min';
+  }
 }

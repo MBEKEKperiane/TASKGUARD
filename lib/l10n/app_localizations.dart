@@ -445,6 +445,216 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select your preferred language.'**
   String get selectPreferredLanguage;
+
+  /// No description provided for @goodMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Morning'**
+  String get goodMorning;
+
+  /// No description provided for @goodAfternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Afternoon'**
+  String get goodAfternoon;
+
+  /// No description provided for @goodEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Evening'**
+  String get goodEvening;
+
+  /// No description provided for @greetingWithName.
+  ///
+  /// In en, this message translates to:
+  /// **'{greeting}, {name}.'**
+  String greetingWithName(String greeting, String name);
+
+  /// No description provided for @priorityTasksToday.
+  ///
+  /// In en, this message translates to:
+  /// **'You have {count} priority tasks today.'**
+  String priorityTasksToday(int count);
+
+  /// No description provided for @smartSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Suggestions'**
+  String get smartSuggestions;
+
+  /// No description provided for @productivityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'PRODUCTIVITY'**
+  String get productivityLabel;
+
+  /// No description provided for @acceptDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept · {mins} min'**
+  String acceptDuration(int mins);
+
+  /// No description provided for @upcomingTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming Tasks'**
+  String get upcomingTasks;
+
+  /// No description provided for @noPendingTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'No pending tasks — great job!'**
+  String get noPendingTasks;
+
+  /// No description provided for @restUpUrgentOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Rest up — only urgent tasks shown today.'**
+  String get restUpUrgentOnly;
+
+  /// No description provided for @completedToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed Today'**
+  String get completedToday;
+
+  /// No description provided for @aiPowered.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Powered'**
+  String get aiPowered;
+
+  /// No description provided for @howAreYouFeeling.
+  ///
+  /// In en, this message translates to:
+  /// **'How are you feeling today?'**
+  String get howAreYouFeeling;
+
+  /// No description provided for @aiPriorityQueue.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Priority Queue'**
+  String get aiPriorityQueue;
+
+  /// No description provided for @seeWhichTasksFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'See which of your {pending} tasks to do first'**
+  String seeWhichTasksFirst(int pending);
+
+  /// No description provided for @productivityReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Productivity Reports'**
+  String get productivityReports;
+
+  /// No description provided for @dailyWeeklyBreakdowns.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily & weekly breakdowns with charts'**
+  String get dailyWeeklyBreakdowns;
+
+  /// No description provided for @aiSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Schedule'**
+  String get aiSchedule;
+
+  /// No description provided for @optimisedDayPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Optimised day plan from your tasks'**
+  String get optimisedDayPlan;
+
+  /// No description provided for @overdueTasksCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 overdue task} other{{count} overdue tasks}}'**
+  String overdueTasksCount(int count);
+
+  /// No description provided for @tapToRescheduleNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to reschedule now'**
+  String get tapToRescheduleNow;
+
+  /// No description provided for @teams.
+  ///
+  /// In en, this message translates to:
+  /// **'Teams'**
+  String get teams;
+
+  /// No description provided for @updatesWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 update waiting} other{{count} updates waiting}}'**
+  String updatesWaiting(int count);
+
+  /// No description provided for @shareAndAssignTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Share and assign tasks with others'**
+  String get shareAndAssignTasks;
+
+  /// No description provided for @studyMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Study Mode'**
+  String get studyMode;
+
+  /// No description provided for @itemsNeedAttention.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 item needs attention} other{{count} items need attention}}'**
+  String itemsNeedAttention(int count);
+
+  /// No description provided for @assignmentsExamsRevision.
+  ///
+  /// In en, this message translates to:
+  /// **'Assignments, exams & revision plans'**
+  String get assignmentsExamsRevision;
+
+  /// No description provided for @levelShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Lv. {level}'**
+  String levelShort(int level);
+
+  /// No description provided for @badgesEarned.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 badge earned} other{{count} badges earned}}'**
+  String badgesEarned(int count);
+
+  /// No description provided for @tasksDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tasks done'**
+  String tasksDone(int count);
+
+  /// No description provided for @healthCheckIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Check-in'**
+  String get healthCheckIn;
+
+  /// No description provided for @logSleepEnergy.
+  ///
+  /// In en, this message translates to:
+  /// **'Log sleep & energy for today\'s workload plan'**
+  String get logSleepEnergy;
+
+  /// No description provided for @deadlinesNeedAttention.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 deadline needs attention} other{{count} deadlines need attention}}'**
+  String deadlinesNeedAttention(int count);
+
+  /// No description provided for @minutesShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{mins} min'**
+  String minutesShort(int mins);
 }
 
 class _AppLocalizationsDelegate

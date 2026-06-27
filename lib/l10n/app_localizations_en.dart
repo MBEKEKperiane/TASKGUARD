@@ -187,4 +187,163 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get selectPreferredLanguage => 'Select your preferred language.';
+
+  @override
+  String get goodMorning => 'Good Morning';
+
+  @override
+  String get goodAfternoon => 'Good Afternoon';
+
+  @override
+  String get goodEvening => 'Good Evening';
+
+  @override
+  String greetingWithName(String greeting, String name) {
+    return '$greeting, $name.';
+  }
+
+  @override
+  String priorityTasksToday(int count) {
+    return 'You have $count priority tasks today.';
+  }
+
+  @override
+  String get smartSuggestions => 'Smart Suggestions';
+
+  @override
+  String get productivityLabel => 'PRODUCTIVITY';
+
+  @override
+  String acceptDuration(int mins) {
+    return 'Accept · $mins min';
+  }
+
+  @override
+  String get upcomingTasks => 'Upcoming Tasks';
+
+  @override
+  String get noPendingTasks => 'No pending tasks — great job!';
+
+  @override
+  String get restUpUrgentOnly => 'Rest up — only urgent tasks shown today.';
+
+  @override
+  String get completedToday => 'Completed Today';
+
+  @override
+  String get aiPowered => 'AI Powered';
+
+  @override
+  String get howAreYouFeeling => 'How are you feeling today?';
+
+  @override
+  String get aiPriorityQueue => 'AI Priority Queue';
+
+  @override
+  String seeWhichTasksFirst(int pending) {
+    return 'See which of your $pending tasks to do first';
+  }
+
+  @override
+  String get productivityReports => 'Productivity Reports';
+
+  @override
+  String get dailyWeeklyBreakdowns => 'Daily & weekly breakdowns with charts';
+
+  @override
+  String get aiSchedule => 'AI Schedule';
+
+  @override
+  String get optimisedDayPlan => 'Optimised day plan from your tasks';
+
+  @override
+  String overdueTasksCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count overdue tasks',
+      one: '1 overdue task',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tapToRescheduleNow => 'Tap to reschedule now';
+
+  @override
+  String get teams => 'Teams';
+
+  @override
+  String updatesWaiting(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count updates waiting',
+      one: '1 update waiting',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get shareAndAssignTasks => 'Share and assign tasks with others';
+
+  @override
+  String get studyMode => 'Study Mode';
+
+  @override
+  String itemsNeedAttention(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items need attention',
+      one: '1 item needs attention',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get assignmentsExamsRevision => 'Assignments, exams & revision plans';
+
+  @override
+  String levelShort(int level) {
+    return 'Lv. $level';
+  }
+
+  @override
+  String badgesEarned(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count badges earned',
+      one: '1 badge earned',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String tasksDone(int count) {
+    return '$count tasks done';
+  }
+
+  @override
+  String get healthCheckIn => 'Health Check-in';
+
+  @override
+  String get logSleepEnergy => 'Log sleep & energy for today\'s workload plan';
+
+  @override
+  String deadlinesNeedAttention(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count deadlines need attention',
+      one: '1 deadline needs attention',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String minutesShort(int mins) {
+    return '$mins min';
+  }
 }
