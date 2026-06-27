@@ -359,4 +359,237 @@ class AppLocalizationsFr extends AppLocalizations {
   String minutesShort(int mins) {
     return '$mins min';
   }
+
+  @override
+  String get tapThemeToApply =>
+      'Appuyez sur un thème pour l\'appliquer instantanément.';
+
+  @override
+  String get themeLight => 'Clair';
+
+  @override
+  String get themeLightDesc => 'Fond blanc épuré, agréable pour les yeux';
+
+  @override
+  String get themeDark => 'Sombre';
+
+  @override
+  String get themeDarkDesc =>
+      'Fond sombre profond pour une utilisation nocturne';
+
+  @override
+  String get themePink => 'Précision rose';
+
+  @override
+  String get themePinkDesc =>
+      'Accent rose vif — le look signature de TaskGuard';
+
+  @override
+  String get pushNotifications => 'Notifications push';
+
+  @override
+  String get enablePushNotifications => 'Activer les notifications push';
+
+  @override
+  String get masterToggleAllAlerts =>
+      'Interrupteur principal pour toutes les alertes';
+
+  @override
+  String get taskReminders => 'Rappels de tâches';
+
+  @override
+  String get getRemindedBeforeDue =>
+      'Recevez un rappel avant l\'échéance des tâches';
+
+  @override
+  String get focusSessionAlerts => 'Alertes de session de concentration';
+
+  @override
+  String get timerStartEndNotifications =>
+      'Notifications de début et fin de minuteur';
+
+  @override
+  String get burnoutWarnings => 'Alertes d\'épuisement';
+
+  @override
+  String get aiWellnessOverloadAlerts =>
+      'Alertes IA de bien-être et de surcharge';
+
+  @override
+  String get alarmSound => 'Son de l\'alarme';
+
+  @override
+  String get changeAlarmRingtone => 'Changer la sonnerie d\'alarme';
+
+  @override
+  String get chooseAlarmSound =>
+      'Choisissez le son joué pour les alarmes de tâches';
+
+  @override
+  String get summaries => 'Résumés';
+
+  @override
+  String get dailySummary => 'Résumé quotidien';
+
+  @override
+  String get morningBriefing => 'Bilan matinal du plan de votre journée';
+
+  @override
+  String get emailDigest => 'Résumé par e-mail';
+
+  @override
+  String get weeklyReportViaEmail =>
+      'Rapport de productivité hebdomadaire par e-mail';
+
+  @override
+  String get notificationPreferencesSaved =>
+      'Préférences de notification enregistrées.';
+
+  @override
+  String get savePreferences => 'Enregistrer les préférences';
+
+  @override
+  String get changeAlarmSound => 'Changer le son de l\'alarme';
+
+  @override
+  String get followStepsOnPhone => 'Suivez ces étapes sur votre téléphone :';
+
+  @override
+  String get ringtoneStep1 => '1. Ouvrez les Paramètres du téléphone';
+
+  @override
+  String get ringtoneStep2 => '2. Allez dans Applications → TaskGuard AI';
+
+  @override
+  String get ringtoneStep3 => '3. Appuyez sur Notifications';
+
+  @override
+  String get ringtoneStep4 => '4. Appuyez sur « Alarmes de tâches »';
+
+  @override
+  String get ringtoneStep5 => '5. Appuyez sur Son et choisissez votre sonnerie';
+
+  @override
+  String get checkAlarmVolumeNotMuted =>
+      'Vérifiez aussi que le volume de l\'alarme n\'est pas coupé (utilisez les boutons de volume pendant qu\'une alarme sonne).';
+
+  @override
+  String get gotIt => 'J\'ai compris';
+
+  @override
+  String get privacy => 'Confidentialité';
+
+  @override
+  String get aiAndData => 'IA et données';
+
+  @override
+  String get aiModelTraining => 'Entraînement du modèle IA';
+
+  @override
+  String get allowTaskGuardImproveAi =>
+      'Autoriser TaskGuard à utiliser vos données pour améliorer les réponses IA';
+
+  @override
+  String get usageAnalytics => 'Analyses d\'utilisation';
+
+  @override
+  String get shareAnonymisedUsage =>
+      'Partager des données d\'utilisation anonymisées pour améliorer l\'application';
+
+  @override
+  String get crashReports => 'Rapports de plantage';
+
+  @override
+  String get autoSendCrashLogs =>
+      'Envoyer automatiquement les journaux de plantage à notre équipe';
+
+  @override
+  String get yourData => 'Vos données';
+
+  @override
+  String get dataExport => 'Exportation des données';
+
+  @override
+  String get includeDataInExports =>
+      'Inclure vos données dans les exports périodiques';
+
+  @override
+  String get exportMyData => 'Exporter mes données';
+
+  @override
+  String get downloadAllYourData =>
+      'Téléchargez toutes vos tâches, sessions et analyses';
+
+  @override
+  String get exportRequestedEmail =>
+      'Exportation demandée. Vous recevrez un e-mail prochainement.';
+
+  @override
+  String get deleteMyAccount => 'Supprimer mon compte';
+
+  @override
+  String get permanentlyRemoveData =>
+      'Supprimer définitivement toutes vos données de TaskGuard';
+
+  @override
+  String get privacySettingsSaved =>
+      'Paramètres de confidentialité enregistrés.';
+
+  @override
+  String get saveSettings => 'Enregistrer les paramètres';
+
+  @override
+  String get deleteAccountQ => 'Supprimer le compte ?';
+
+  @override
+  String get deleteAccountWarning =>
+      'Cela supprimera définitivement toutes vos données. Cette action est irréversible.';
+
+  @override
+  String get cancel => 'Annuler';
+
+  @override
+  String get delete => 'Supprimer';
+
+  @override
+  String get profile => 'Profil';
+
+  @override
+  String get save => 'Enregistrer';
+
+  @override
+  String get account => 'Compte';
+
+  @override
+  String get emailCannotBeChanged => 'L\'e-mail ne peut pas être modifié.';
+
+  @override
+  String get wellness => 'Bien-être';
+
+  @override
+  String get strengthLevel => 'Niveau de force';
+
+  @override
+  String get currentMood => 'Humeur actuelle';
+
+  @override
+  String get sleepHours => 'Heures de sommeil';
+
+  @override
+  String sleepHoursValue(int hours) {
+    return '$hours h';
+  }
+
+  @override
+  String get signOut => 'Se déconnecter';
+
+  @override
+  String get nameCannotBeEmpty => 'Le nom ne peut pas être vide.';
+
+  @override
+  String get profileSaved => 'Profil enregistré.';
+
+  @override
+  String get savedOfflineWillSync =>
+      'Enregistré hors ligne — synchronisation à la reconnexion.';
 }

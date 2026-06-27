@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 
 class PrivacyScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -27,7 +29,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               color: AppColors.textPrimary, size: 20),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Privacy',
+        title: Text(t.privacy,
             style: GoogleFonts.inter(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
@@ -38,57 +40,57 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _sectionLabel('AI & Data'),
+            _sectionLabel(t.aiAndData),
             _tile(
-              'AI Model Training',
-              'Allow TaskGuard to use your data to improve AI responses',
+              t.aiModelTraining,
+              t.allowTaskGuardImproveAi,
               _aiTraining,
               (v) => setState(() => _aiTraining = v),
             ),
             _tile(
-              'Usage Analytics',
-              'Share anonymised usage data to improve the app',
+              t.usageAnalytics,
+              t.shareAnonymisedUsage,
               _analytics,
               (v) => setState(() => _analytics = v),
             ),
             _tile(
-              'Crash Reports',
-              'Automatically send crash logs to our team',
+              t.crashReports,
+              t.autoSendCrashLogs,
               _crashReports,
               (v) => setState(() => _crashReports = v),
             ),
             const SizedBox(height: 20),
-            _sectionLabel('Your Data'),
+            _sectionLabel(t.yourData),
             _tile(
-              'Data Export',
-              'Include your data in periodic export packages',
+              t.dataExport,
+              t.includeDataInExports,
               _dataExport,
               (v) => setState(() => _dataExport = v),
             ),
             const SizedBox(height: 8),
             _actionTile(
               icon: Icons.download_outlined,
-              label: 'Export My Data',
-              subtitle: 'Download all your tasks, sessions and insights',
+              label: t.exportMyData,
+              subtitle: t.downloadAllYourData,
               onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                    content: Text('Export requested. You\'ll receive an email shortly.'),
+                SnackBar(
+                    content: Text(t.exportRequestedEmail),
                     backgroundColor: AppColors.primary),
               ),
             ),
             const SizedBox(height: 4),
             _actionTile(
               icon: Icons.delete_outline_rounded,
-              label: 'Delete My Account',
-              subtitle: 'Permanently remove all your data from TaskGuard',
+              label: t.deleteMyAccount,
+              subtitle: t.permanentlyRemoveData,
               onTap: () => _confirmDelete(context),
               destructive: true,
             ),
             const SizedBox(height: 32),
             GestureDetector(
               onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                    content: Text('Privacy settings saved.'),
+                SnackBar(
+                    content: Text(t.privacySettingsSaved),
                     backgroundColor: AppColors.primary),
               ),
               child: Container(
@@ -98,7 +100,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                   borderRadius: BorderRadius.circular(26),
                 ),
                 alignment: Alignment.center,
-                child: Text('Save Settings',
+                child: Text(t.saveSettings,
                     style: GoogleFonts.inter(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -112,24 +114,25 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
   }
 
   void _confirmDelete(BuildContext context) {
+    final t = AppLocalizations.of(context);
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text('Delete Account?',
+        title: Text(t.deleteAccountQ,
             style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
         content: Text(
-            'This will permanently delete all your data. This action cannot be undone.',
+            t.deleteAccountWarning,
             style: GoogleFonts.inter(fontSize: 14, color: AppColors.textSecondary)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel',
+            child: Text(t.cancel,
                 style: GoogleFonts.inter(color: AppColors.textSecondary)),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Delete',
+            child: Text(t.delete,
                 style: GoogleFonts.inter(
                     color: AppColors.error, fontWeight: FontWeight.w600)),
           ),

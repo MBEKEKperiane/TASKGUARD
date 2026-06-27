@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../features/theme/providers/theme_provider.dart';
+import '../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 
 class ThemeScreen extends ConsumerWidget {
@@ -10,19 +11,20 @@ class ThemeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final current = ref.watch(themeProvider);
+    final t = AppLocalizations.of(context);
 
     final themes = [
       {
         'mode': AppThemeMode.light,
-        'label': 'Light',
-        'description': 'Clean white background, easy on the eyes',
+        'label': t.themeLight,
+        'description': t.themeLightDesc,
         'icon': Icons.wb_sunny_outlined,
         'preview': <Color>[Colors.white, const Color(0xFFFFF0F7)],
       },
       {
         'mode': AppThemeMode.dark,
-        'label': 'Dark',
-        'description': 'Deep dark background for night use',
+        'label': t.themeDark,
+        'description': t.themeDarkDesc,
         'icon': Icons.nightlight_outlined,
         'preview': <Color>[
           const Color(0xFF0B0C1A),
@@ -31,8 +33,8 @@ class ThemeScreen extends ConsumerWidget {
       },
       {
         'mode': AppThemeMode.pink,
-        'label': 'Pink Precision',
-        'description': 'Vibrant pink accent — the TaskGuard signature look',
+        'label': t.themePink,
+        'description': t.themePinkDesc,
         'icon': Icons.auto_awesome_outlined,
         'preview': <Color>[const Color(0xFFFCE4EC), AppColors.primary],
       },
@@ -49,7 +51,7 @@ class ThemeScreen extends ConsumerWidget {
               color: context.colText1, size: 20),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Theme',
+        title: Text(t.theme,
             style: GoogleFonts.inter(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
@@ -62,7 +64,7 @@ class ThemeScreen extends ConsumerWidget {
           children: [
             const SizedBox(height: 8),
             Text(
-              'Tap a theme to apply it instantly.',
+              t.tapThemeToApply,
               style: GoogleFonts.inter(fontSize: 13, color: context.colText2),
             ),
             const SizedBox(height: 16),

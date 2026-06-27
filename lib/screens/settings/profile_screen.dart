@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/mood/models/mood_entry.dart';
+import '../../l10n/app_localizations.dart';
 import '../../services/api_client.dart';
 import '../../services/auth_service.dart';
 import '../../services/local_storage.dart';
@@ -68,8 +69,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final name = _nameCtrl.text.trim();
     if (name.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Name cannot be empty.'),
+        SnackBar(
+            content: Text(AppLocalizations.of(context).nameCannotBeEmpty),
             backgroundColor: Colors.redAccent),
       );
       return;
@@ -91,8 +92,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       if (mounted) {
         setState(() => _saving = false);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('Profile saved.'),
+          SnackBar(
+              content: Text(AppLocalizations.of(context).profileSaved),
               backgroundColor: AppColors.primary),
         );
       }
@@ -107,8 +108,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       if (mounted) {
         setState(() => _saving = false);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('Saved offline — will sync when connected.'),
+          SnackBar(
+              content: Text(AppLocalizations.of(context).savedOfflineWillSync),
               backgroundColor: AppColors.primary),
         );
       }
@@ -134,6 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: context.colBg,
       appBar: AppBar(
@@ -141,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         elevation: 0,
         surfaceTintColor: Colors.transparent,
         automaticallyImplyLeading: false,
-        title: Text('Profile',
+        title: Text(t.profile,
             style: GoogleFonts.inter(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
@@ -155,7 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: 18,
                     child: CircularProgressIndicator(
                         color: AppColors.primary, strokeWidth: 2))
-                : Text('Save',
+                : Text(t.save,
                     style: GoogleFonts.inter(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -188,22 +190,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 28),
 
                   // ── Account ──────────────────────────────────────────────
-                  _sectionLabel('Account'),
+                  _sectionLabel(t.account),
                   const SizedBox(height: 12),
-                  _textField('Full Name', _nameCtrl,
+                  _textField(t.fullName, _nameCtrl,
                       icon: Icons.person_outline_rounded),
                   const SizedBox(height: 12),
-                  _textField('Email Address', _emailCtrl,
+                  _textField(t.emailAddress, _emailCtrl,
                       icon: Icons.mail_outline_rounded, readOnly: true),
                   const SizedBox(height: 6),
-                  Text('Email cannot be changed.',
+                  Text(t.emailCannotBeChanged,
                       style: GoogleFonts.inter(
                           fontSize: 11, color: context.colHint)),
 
                   const SizedBox(height: 28),
 
                   // ── Wellness ─────────────────────────────────────────────
-                  _sectionLabel('Wellness'),
+                  _sectionLabel(t.wellness),
                   const SizedBox(height: 12),
 
                   // Strength level
@@ -215,7 +217,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Icon(Icons.fitness_center_outlined,
                               color: AppColors.primary, size: 18),
                           const SizedBox(width: 8),
-                          Text('Strength Level',
+                          Text(t.strengthLevel,
                               style: GoogleFonts.inter(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
@@ -266,7 +268,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Icon(Icons.mood_outlined,
                               color: AppColors.primary, size: 18),
                           const SizedBox(width: 8),
-                          Text('Current Mood',
+                          Text(t.currentMood,
                               style: GoogleFonts.inter(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
@@ -336,13 +338,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Icon(Icons.bedtime_outlined,
                               color: AppColors.primary, size: 18),
                           const SizedBox(width: 8),
-                          Text('Sleep Hours',
+                          Text(t.sleepHours,
                               style: GoogleFonts.inter(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
                                   color: context.colText1)),
                           const Spacer(),
-                          Text('$_sleepHours hrs',
+                          Text(t.sleepHoursValue(_sleepHours),
                               style: GoogleFonts.inter(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
@@ -391,7 +393,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onPressed: _signOut,
                       icon: const Icon(Icons.logout_rounded,
                           color: AppColors.primary, size: 18),
-                      label: Text('Sign Out',
+                      label: Text(t.signOut,
                           style: GoogleFonts.inter(
                               fontSize: 15,
                               color: AppColors.primary,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 
 class NotificationsScreen extends StatefulWidget {
@@ -19,6 +20,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: context.colBg,
       appBar: AppBar(
@@ -30,7 +32,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               color: context.colText1, size: 20),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Notifications',
+        title: Text(t.notifications,
             style: GoogleFonts.inter(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
@@ -41,43 +43,43 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _sectionLabel('Push Notifications'),
-            _tile('Enable Push Notifications', 'Master toggle for all alerts',
+            _sectionLabel(t.pushNotifications),
+            _tile(t.enablePushNotifications, t.masterToggleAllAlerts,
                 _pushEnabled, (v) => setState(() => _pushEnabled = v)),
-            _tile('Task Reminders', 'Get reminded before tasks are due',
+            _tile(t.taskReminders, t.getRemindedBeforeDue,
                 _taskReminders,
                 (v) => setState(() => _taskReminders = v),
                 enabled: _pushEnabled),
-            _tile('Focus Session Alerts', 'Timer start and end notifications',
+            _tile(t.focusSessionAlerts, t.timerStartEndNotifications,
                 _focusAlerts,
                 (v) => setState(() => _focusAlerts = v),
                 enabled: _pushEnabled),
-            _tile('Burnout Warnings', 'AI wellness & overload alerts',
+            _tile(t.burnoutWarnings, t.aiWellnessOverloadAlerts,
                 _burnoutAlerts,
                 (v) => setState(() => _burnoutAlerts = v),
                 enabled: _pushEnabled),
             const SizedBox(height: 20),
-            _sectionLabel('Alarm Sound'),
+            _sectionLabel(t.alarmSound),
             _actionTile(
               icon: Icons.music_note_rounded,
-              title: 'Change Alarm Ringtone',
-              subtitle: 'Choose the sound that plays for task alarms',
+              title: t.changeAlarmRingtone,
+              subtitle: t.chooseAlarmSound,
               onTap: () => _showRingtoneInstructions(context),
             ),
             const SizedBox(height: 20),
-            _sectionLabel('Summaries'),
-            _tile('Daily Summary', 'Morning briefing of your day\'s plan',
+            _sectionLabel(t.summaries),
+            _tile(t.dailySummary, t.morningBriefing,
                 _dailySummary,
                 (v) => setState(() => _dailySummary = v)),
-            _tile('Email Digest', 'Weekly productivity report via email',
+            _tile(t.emailDigest, t.weeklyReportViaEmail,
                 _emailDigest,
                 (v) => setState(() => _emailDigest = v)),
             const SizedBox(height: 32),
             GestureDetector(
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                      content: Text('Notification preferences saved.'),
+                  SnackBar(
+                      content: Text(t.notificationPreferencesSaved),
                       backgroundColor: AppColors.primary),
                 );
               },
@@ -88,7 +90,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   borderRadius: BorderRadius.circular(26),
                 ),
                 alignment: Alignment.center,
-                child: Text('Save Preferences',
+                child: Text(t.savePreferences,
                     style: GoogleFonts.inter(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -102,25 +104,26 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   void _showRingtoneInstructions(BuildContext context) {
+    final t = AppLocalizations.of(context);
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text('Change Alarm Sound',
+        title: Text(t.changeAlarmSound,
             style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 17)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Follow these steps on your phone:',
+            Text(t.followStepsOnPhone,
                 style: GoogleFonts.inter(fontSize: 13, color: context.colText2)),
             const SizedBox(height: 12),
             ...[
-              '1. Open phone Settings',
-              '2. Go to Apps → TaskGuard AI',
-              '3. Tap Notifications',
-              '4. Tap "Task Alarms"',
-              '5. Tap Sound and choose your ringtone',
+              t.ringtoneStep1,
+              t.ringtoneStep2,
+              t.ringtoneStep3,
+              t.ringtoneStep4,
+              t.ringtoneStep5,
             ].map((step) => Padding(
                   padding: const EdgeInsets.only(bottom: 6),
                   child: Text(step,
@@ -130,14 +133,14 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                           color: context.colText1)),
                 )),
             const SizedBox(height: 8),
-            Text('Also check that your Alarm volume is not muted (use volume buttons while an alarm plays).',
+            Text(t.checkAlarmVolumeNotMuted,
                 style: GoogleFonts.inter(fontSize: 12, color: context.colHint)),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Got it',
+            child: Text(t.gotIt,
                 style: GoogleFonts.inter(
                     color: AppColors.primary, fontWeight: FontWeight.w600)),
           ),

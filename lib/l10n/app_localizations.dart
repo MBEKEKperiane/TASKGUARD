@@ -655,6 +655,426 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{mins} min'**
   String minutesShort(int mins);
+
+  /// No description provided for @tapThemeToApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a theme to apply it instantly.'**
+  String get tapThemeToApply;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// No description provided for @themeLightDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Clean white background, easy on the eyes'**
+  String get themeLightDesc;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
+
+  /// No description provided for @themeDarkDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Deep dark background for night use'**
+  String get themeDarkDesc;
+
+  /// No description provided for @themePink.
+  ///
+  /// In en, this message translates to:
+  /// **'Pink Precision'**
+  String get themePink;
+
+  /// No description provided for @themePinkDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Vibrant pink accent — the TaskGuard signature look'**
+  String get themePinkDesc;
+
+  /// No description provided for @pushNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Push Notifications'**
+  String get pushNotifications;
+
+  /// No description provided for @enablePushNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Push Notifications'**
+  String get enablePushNotifications;
+
+  /// No description provided for @masterToggleAllAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Master toggle for all alerts'**
+  String get masterToggleAllAlerts;
+
+  /// No description provided for @taskReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Task Reminders'**
+  String get taskReminders;
+
+  /// No description provided for @getRemindedBeforeDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Get reminded before tasks are due'**
+  String get getRemindedBeforeDue;
+
+  /// No description provided for @focusSessionAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus Session Alerts'**
+  String get focusSessionAlerts;
+
+  /// No description provided for @timerStartEndNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Timer start and end notifications'**
+  String get timerStartEndNotifications;
+
+  /// No description provided for @burnoutWarnings.
+  ///
+  /// In en, this message translates to:
+  /// **'Burnout Warnings'**
+  String get burnoutWarnings;
+
+  /// No description provided for @aiWellnessOverloadAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'AI wellness & overload alerts'**
+  String get aiWellnessOverloadAlerts;
+
+  /// No description provided for @alarmSound.
+  ///
+  /// In en, this message translates to:
+  /// **'Alarm Sound'**
+  String get alarmSound;
+
+  /// No description provided for @changeAlarmRingtone.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Alarm Ringtone'**
+  String get changeAlarmRingtone;
+
+  /// No description provided for @chooseAlarmSound.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the sound that plays for task alarms'**
+  String get chooseAlarmSound;
+
+  /// No description provided for @summaries.
+  ///
+  /// In en, this message translates to:
+  /// **'Summaries'**
+  String get summaries;
+
+  /// No description provided for @dailySummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Summary'**
+  String get dailySummary;
+
+  /// No description provided for @morningBriefing.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning briefing of your day\'s plan'**
+  String get morningBriefing;
+
+  /// No description provided for @emailDigest.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Digest'**
+  String get emailDigest;
+
+  /// No description provided for @weeklyReportViaEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly productivity report via email'**
+  String get weeklyReportViaEmail;
+
+  /// No description provided for @notificationPreferencesSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification preferences saved.'**
+  String get notificationPreferencesSaved;
+
+  /// No description provided for @savePreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Preferences'**
+  String get savePreferences;
+
+  /// No description provided for @changeAlarmSound.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Alarm Sound'**
+  String get changeAlarmSound;
+
+  /// No description provided for @followStepsOnPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow these steps on your phone:'**
+  String get followStepsOnPhone;
+
+  /// No description provided for @ringtoneStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Open phone Settings'**
+  String get ringtoneStep1;
+
+  /// No description provided for @ringtoneStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Go to Apps → TaskGuard AI'**
+  String get ringtoneStep2;
+
+  /// No description provided for @ringtoneStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Tap Notifications'**
+  String get ringtoneStep3;
+
+  /// No description provided for @ringtoneStep4.
+  ///
+  /// In en, this message translates to:
+  /// **'4. Tap \"Task Alarms\"'**
+  String get ringtoneStep4;
+
+  /// No description provided for @ringtoneStep5.
+  ///
+  /// In en, this message translates to:
+  /// **'5. Tap Sound and choose your ringtone'**
+  String get ringtoneStep5;
+
+  /// No description provided for @checkAlarmVolumeNotMuted.
+  ///
+  /// In en, this message translates to:
+  /// **'Also check that your Alarm volume is not muted (use volume buttons while an alarm plays).'**
+  String get checkAlarmVolumeNotMuted;
+
+  /// No description provided for @gotIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get gotIt;
+
+  /// No description provided for @privacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get privacy;
+
+  /// No description provided for @aiAndData.
+  ///
+  /// In en, this message translates to:
+  /// **'AI & Data'**
+  String get aiAndData;
+
+  /// No description provided for @aiModelTraining.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Model Training'**
+  String get aiModelTraining;
+
+  /// No description provided for @allowTaskGuardImproveAi.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow TaskGuard to use your data to improve AI responses'**
+  String get allowTaskGuardImproveAi;
+
+  /// No description provided for @usageAnalytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage Analytics'**
+  String get usageAnalytics;
+
+  /// No description provided for @shareAnonymisedUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'Share anonymised usage data to improve the app'**
+  String get shareAnonymisedUsage;
+
+  /// No description provided for @crashReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Crash Reports'**
+  String get crashReports;
+
+  /// No description provided for @autoSendCrashLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically send crash logs to our team'**
+  String get autoSendCrashLogs;
+
+  /// No description provided for @yourData.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Data'**
+  String get yourData;
+
+  /// No description provided for @dataExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Export'**
+  String get dataExport;
+
+  /// No description provided for @includeDataInExports.
+  ///
+  /// In en, this message translates to:
+  /// **'Include your data in periodic export packages'**
+  String get includeDataInExports;
+
+  /// No description provided for @exportMyData.
+  ///
+  /// In en, this message translates to:
+  /// **'Export My Data'**
+  String get exportMyData;
+
+  /// No description provided for @downloadAllYourData.
+  ///
+  /// In en, this message translates to:
+  /// **'Download all your tasks, sessions and insights'**
+  String get downloadAllYourData;
+
+  /// No description provided for @exportRequestedEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Export requested. You\'ll receive an email shortly.'**
+  String get exportRequestedEmail;
+
+  /// No description provided for @deleteMyAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete My Account'**
+  String get deleteMyAccount;
+
+  /// No description provided for @permanentlyRemoveData.
+  ///
+  /// In en, this message translates to:
+  /// **'Permanently remove all your data from TaskGuard'**
+  String get permanentlyRemoveData;
+
+  /// No description provided for @privacySettingsSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy settings saved.'**
+  String get privacySettingsSaved;
+
+  /// No description provided for @saveSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Settings'**
+  String get saveSettings;
+
+  /// No description provided for @deleteAccountQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account?'**
+  String get deleteAccountQ;
+
+  /// No description provided for @deleteAccountWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'This will permanently delete all your data. This action cannot be undone.'**
+  String get deleteAccountWarning;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @account.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get account;
+
+  /// No description provided for @emailCannotBeChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Email cannot be changed.'**
+  String get emailCannotBeChanged;
+
+  /// No description provided for @wellness.
+  ///
+  /// In en, this message translates to:
+  /// **'Wellness'**
+  String get wellness;
+
+  /// No description provided for @strengthLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Strength Level'**
+  String get strengthLevel;
+
+  /// No description provided for @currentMood.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Mood'**
+  String get currentMood;
+
+  /// No description provided for @sleepHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep Hours'**
+  String get sleepHours;
+
+  /// No description provided for @sleepHoursValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} hrs'**
+  String sleepHoursValue(int hours);
+
+  /// No description provided for @signOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Out'**
+  String get signOut;
+
+  /// No description provided for @nameCannotBeEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Name cannot be empty.'**
+  String get nameCannotBeEmpty;
+
+  /// No description provided for @profileSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile saved.'**
+  String get profileSaved;
+
+  /// No description provided for @savedOfflineWillSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved offline — will sync when connected.'**
+  String get savedOfflineWillSync;
 }
 
 class _AppLocalizationsDelegate

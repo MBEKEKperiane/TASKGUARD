@@ -346,4 +346,226 @@ class AppLocalizationsEn extends AppLocalizations {
   String minutesShort(int mins) {
     return '$mins min';
   }
+
+  @override
+  String get tapThemeToApply => 'Tap a theme to apply it instantly.';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeLightDesc => 'Clean white background, easy on the eyes';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get themeDarkDesc => 'Deep dark background for night use';
+
+  @override
+  String get themePink => 'Pink Precision';
+
+  @override
+  String get themePinkDesc =>
+      'Vibrant pink accent — the TaskGuard signature look';
+
+  @override
+  String get pushNotifications => 'Push Notifications';
+
+  @override
+  String get enablePushNotifications => 'Enable Push Notifications';
+
+  @override
+  String get masterToggleAllAlerts => 'Master toggle for all alerts';
+
+  @override
+  String get taskReminders => 'Task Reminders';
+
+  @override
+  String get getRemindedBeforeDue => 'Get reminded before tasks are due';
+
+  @override
+  String get focusSessionAlerts => 'Focus Session Alerts';
+
+  @override
+  String get timerStartEndNotifications => 'Timer start and end notifications';
+
+  @override
+  String get burnoutWarnings => 'Burnout Warnings';
+
+  @override
+  String get aiWellnessOverloadAlerts => 'AI wellness & overload alerts';
+
+  @override
+  String get alarmSound => 'Alarm Sound';
+
+  @override
+  String get changeAlarmRingtone => 'Change Alarm Ringtone';
+
+  @override
+  String get chooseAlarmSound => 'Choose the sound that plays for task alarms';
+
+  @override
+  String get summaries => 'Summaries';
+
+  @override
+  String get dailySummary => 'Daily Summary';
+
+  @override
+  String get morningBriefing => 'Morning briefing of your day\'s plan';
+
+  @override
+  String get emailDigest => 'Email Digest';
+
+  @override
+  String get weeklyReportViaEmail => 'Weekly productivity report via email';
+
+  @override
+  String get notificationPreferencesSaved => 'Notification preferences saved.';
+
+  @override
+  String get savePreferences => 'Save Preferences';
+
+  @override
+  String get changeAlarmSound => 'Change Alarm Sound';
+
+  @override
+  String get followStepsOnPhone => 'Follow these steps on your phone:';
+
+  @override
+  String get ringtoneStep1 => '1. Open phone Settings';
+
+  @override
+  String get ringtoneStep2 => '2. Go to Apps → TaskGuard AI';
+
+  @override
+  String get ringtoneStep3 => '3. Tap Notifications';
+
+  @override
+  String get ringtoneStep4 => '4. Tap \"Task Alarms\"';
+
+  @override
+  String get ringtoneStep5 => '5. Tap Sound and choose your ringtone';
+
+  @override
+  String get checkAlarmVolumeNotMuted =>
+      'Also check that your Alarm volume is not muted (use volume buttons while an alarm plays).';
+
+  @override
+  String get gotIt => 'Got it';
+
+  @override
+  String get privacy => 'Privacy';
+
+  @override
+  String get aiAndData => 'AI & Data';
+
+  @override
+  String get aiModelTraining => 'AI Model Training';
+
+  @override
+  String get allowTaskGuardImproveAi =>
+      'Allow TaskGuard to use your data to improve AI responses';
+
+  @override
+  String get usageAnalytics => 'Usage Analytics';
+
+  @override
+  String get shareAnonymisedUsage =>
+      'Share anonymised usage data to improve the app';
+
+  @override
+  String get crashReports => 'Crash Reports';
+
+  @override
+  String get autoSendCrashLogs => 'Automatically send crash logs to our team';
+
+  @override
+  String get yourData => 'Your Data';
+
+  @override
+  String get dataExport => 'Data Export';
+
+  @override
+  String get includeDataInExports =>
+      'Include your data in periodic export packages';
+
+  @override
+  String get exportMyData => 'Export My Data';
+
+  @override
+  String get downloadAllYourData =>
+      'Download all your tasks, sessions and insights';
+
+  @override
+  String get exportRequestedEmail =>
+      'Export requested. You\'ll receive an email shortly.';
+
+  @override
+  String get deleteMyAccount => 'Delete My Account';
+
+  @override
+  String get permanentlyRemoveData =>
+      'Permanently remove all your data from TaskGuard';
+
+  @override
+  String get privacySettingsSaved => 'Privacy settings saved.';
+
+  @override
+  String get saveSettings => 'Save Settings';
+
+  @override
+  String get deleteAccountQ => 'Delete Account?';
+
+  @override
+  String get deleteAccountWarning =>
+      'This will permanently delete all your data. This action cannot be undone.';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get emailCannotBeChanged => 'Email cannot be changed.';
+
+  @override
+  String get wellness => 'Wellness';
+
+  @override
+  String get strengthLevel => 'Strength Level';
+
+  @override
+  String get currentMood => 'Current Mood';
+
+  @override
+  String get sleepHours => 'Sleep Hours';
+
+  @override
+  String sleepHoursValue(int hours) {
+    return '$hours hrs';
+  }
+
+  @override
+  String get signOut => 'Sign Out';
+
+  @override
+  String get nameCannotBeEmpty => 'Name cannot be empty.';
+
+  @override
+  String get profileSaved => 'Profile saved.';
+
+  @override
+  String get savedOfflineWillSync =>
+      'Saved offline — will sync when connected.';
 }
