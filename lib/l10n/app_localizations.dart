@@ -301,6 +301,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Password must be at least 8 characters.'**
   String get passwordTooShort;
+
+  /// No description provided for @verifyYourEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Your Email'**
+  String get verifyYourEmail;
+
+  /// No description provided for @weSentCodeTo.
+  ///
+  /// In en, this message translates to:
+  /// **'We sent a 6-digit code to'**
+  String get weSentCodeTo;
+
+  /// No description provided for @verify.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get verify;
+
+  /// No description provided for @resendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend Code'**
+  String get resendCode;
+
+  /// No description provided for @checkSpamCodeExpires.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your spam or junk folder if the email doesn\'t arrive within a few minutes. The code expires in 10 minutes.'**
+  String get checkSpamCodeExpires;
+
+  /// No description provided for @useDifferentAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a different account'**
+  String get useDifferentAccount;
+
+  /// No description provided for @enterSixDigitCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the 6-digit code.'**
+  String get enterSixDigitCode;
+
+  /// No description provided for @invalidOrExpiredCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid or expired code. Please try again.'**
+  String get invalidOrExpiredCode;
+
+  /// No description provided for @codeResentCheckInbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Code resent! Check your inbox.'**
+  String get codeResentCheckInbox;
+
+  /// No description provided for @failedToResendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to resend code. Please try again.'**
+  String get failedToResendCode;
+
+  /// No description provided for @loginSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'Login successful!'**
+  String get loginSuccessful;
 }
 
 class _AppLocalizationsDelegate

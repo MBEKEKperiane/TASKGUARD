@@ -36,5 +36,17 @@
   "alreadyHaveAccountQ": "Vous avez déjà un compte ? ",
   "fillAllFields": "Veuillez remplir tous les champs.",
   "passwordsDoNotMatch": "Les mots de passe ne correspondent pas.",
-  "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères."
+  "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères.",
+
+  "verifyYourEmail": "Vérifiez votre e-mail",
+  "weSentCodeTo": "Nous avons envoyé un code à 6 chiffres à",
+  "verify": "Vérifier",
+  "resendCode": "Renvoyer le code",
+  "checkSpamCodeExpires": "Vérifiez votre dossier spam si l'e-mail n'arrive pas dans quelques minutes. Le code expire dans 10 minutes.",
+  "useDifferentAccount": "Utiliser un autre compte",
+  "enterSixDigitCode": "Veuillez saisir le code à 6 chiffres.",
+  "invalidOrExpiredCode": "Code invalide ou expiré. Veuillez réessayer.",
+  "codeResentCheckInbox": "Code renvoyé ! Vérifiez votre boîte de réception.",
+  "failedToResendCode": "Échec de l'envoi du code. Veuillez réessayer.",
+  "loginSuccessful": "Connexion réussie !"
 }

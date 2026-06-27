@@ -113,4 +113,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get passwordTooShort => 'Password must be at least 8 characters.';
+
+  @override
+  String get verifyYourEmail => 'Verify Your Email';
+
+  @override
+  String get weSentCodeTo => 'We sent a 6-digit code to';
+
+  @override
+  String get verify => 'Verify';
+
+  @override
+  String get resendCode => 'Resend Code';
+
+  @override
+  String get checkSpamCodeExpires =>
+      'Check your spam or junk folder if the email doesn\'t arrive within a few minutes. The code expires in 10 minutes.';
+
+  @override
+  String get useDifferentAccount => 'Use a different account';
+
+  @override
+  String get enterSixDigitCode => 'Please enter the 6-digit code.';
+
+  @override
+  String get invalidOrExpiredCode =>
+      'Invalid or expired code. Please try again.';
+
+  @override
+  String get codeResentCheckInbox => 'Code resent! Check your inbox.';
+
+  @override
+  String get failedToResendCode => 'Failed to resend code. Please try again.';
+
+  @override
+  String get loginSuccessful => 'Login successful!';
 }

@@ -117,4 +117,41 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get passwordTooShort =>
       'Le mot de passe doit contenir au moins 8 caractères.';
+
+  @override
+  String get verifyYourEmail => 'Vérifiez votre e-mail';
+
+  @override
+  String get weSentCodeTo => 'Nous avons envoyé un code à 6 chiffres à';
+
+  @override
+  String get verify => 'Vérifier';
+
+  @override
+  String get resendCode => 'Renvoyer le code';
+
+  @override
+  String get checkSpamCodeExpires =>
+      'Vérifiez votre dossier spam si l\'e-mail n\'arrive pas dans quelques minutes. Le code expire dans 10 minutes.';
+
+  @override
+  String get useDifferentAccount => 'Utiliser un autre compte';
+
+  @override
+  String get enterSixDigitCode => 'Veuillez saisir le code à 6 chiffres.';
+
+  @override
+  String get invalidOrExpiredCode =>
+      'Code invalide ou expiré. Veuillez réessayer.';
+
+  @override
+  String get codeResentCheckInbox =>
+      'Code renvoyé ! Vérifiez votre boîte de réception.';
+
+  @override
+  String get failedToResendCode =>
+      'Échec de l\'envoi du code. Veuillez réessayer.';
+
+  @override
+  String get loginSuccessful => 'Connexion réussie !';
 }

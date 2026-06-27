@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../features/auth/models/auth_state.dart';
 import '../../features/auth/providers/auth_provider.dart';
+import '../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 import '../../widgets/bottom_nav_shell.dart';
 import '../../widgets/responsive_layout.dart';
@@ -44,6 +45,7 @@ class _EmailVerificationScreenState
     });
 
     final email = ref.watch(authProvider).userEmail ?? '';
+    final t = AppLocalizations.of(context);
 
     return Scaffold(
       body: Stack(
@@ -86,7 +88,7 @@ class _EmailVerificationScreenState
                     ),
                     const SizedBox(height: 24),
                     Text(
-                      'Verify Your Email',
+                      t.verifyYourEmail,
                       style: GoogleFonts.inter(
                         fontSize: 26,
                         fontWeight: FontWeight.w800,
@@ -95,7 +97,7 @@ class _EmailVerificationScreenState
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'We sent a 6-digit code to',
+                      t.weSentCodeTo,
                       style: GoogleFonts.inter(
                           fontSize: 14, color: AppColors.textSecondary),
                       textAlign: TextAlign.center,
@@ -143,7 +145,7 @@ class _EmailVerificationScreenState
                         ? const Center(
                             child: CircularProgressIndicator(
                                 color: AppColors.primary))
-                        : _gradientButton('Verify', onTap: _verifyCode),
+                        : _gradientButton(t.verify, onTap: _verifyCode),
                     const SizedBox(height: 16),
                     _resending
                         ? const SizedBox(
@@ -161,7 +163,7 @@ class _EmailVerificationScreenState
                                   borderRadius: BorderRadius.circular(14)),
                             ),
                             icon: const Icon(Icons.send_rounded, size: 18),
-                            label: Text('Resend Code',
+                            label: Text(t.resendCode,
                                 style: GoogleFonts.inter(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600)),
@@ -181,7 +183,7 @@ class _EmailVerificationScreenState
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              "Check your spam or junk folder if the email doesn't arrive within a few minutes. The code expires in 10 minutes.",
+                              t.checkSpamCodeExpires,
                               style: GoogleFonts.inter(
                                   fontSize: 12,
                                   color: AppColors.primary,
@@ -195,7 +197,7 @@ class _EmailVerificationScreenState
                     TextButton(
                       onPressed: _logout,
                       child: Text(
-                        'Use a different account',
+                        t.useDifferentAccount,
                         style: GoogleFonts.inter(
                             fontSize: 13, color: AppColors.textSecondary),
                       ),
@@ -214,14 +216,16 @@ class _EmailVerificationScreenState
   Future<void> _verifyCode() async {
     final code = _codeCtrl.text.trim();
     if (code.length != 6) {
-      _showError('Please enter the 6-digit code.');
+      _showError(AppLocalizations.of(context).enterSixDigitCode);
       return;
     }
     setState(() => _verifying = true);
     try {
       await ref.read(authProvider.notifier).verifyEmailCode(code);
     } catch (_) {
-      if (mounted) _showError('Invalid or expired code. Please try again.');
+      if (mounted) {
+        _showError(AppLocalizations.of(context).invalidOrExpiredCode);
+      }
     } finally {
       if (mounted) setState(() => _verifying = false);
     }
@@ -233,8 +237,8 @@ class _EmailVerificationScreenState
       await ref.read(authProvider.notifier).resendVerificationEmail();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Code resent! Check your inbox.'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context).codeResentCheckInbox),
             backgroundColor: AppColors.success,
           ),
         );
@@ -242,8 +246,8 @@ class _EmailVerificationScreenState
     } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed to resend code. Please try again.'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context).failedToResendCode),
             backgroundColor: AppColors.error,
           ),
         );

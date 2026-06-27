@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/calendar/calendar_screen.dart';
 import '../screens/chat/chat_screen.dart';
@@ -26,7 +27,7 @@ class _BottomNavShellState extends State<BottomNavShell> {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Login successful!'),
+            content: Text(AppLocalizations.of(context).loginSuccessful),
             backgroundColor: AppColors.success,
             duration: const Duration(seconds: 5),
           ),
