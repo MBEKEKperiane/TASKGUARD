@@ -2,8 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'features/locale/providers/locale_provider.dart';
 import 'features/theme/providers/theme_provider.dart';
 import 'services/local_storage.dart';
 import 'services/local_notification_service.dart';
@@ -21,13 +23,17 @@ void main() async {
   // flutter_local_notifications has no web support — skip on web
   if (!kIsWeb) await LocalNotificationService.init();
 
-  // Read the persisted theme before the first frame so there is no flicker.
+  // Read the persisted theme and language before the first frame so there
+  // is no flicker.
   final prefs = await SharedPreferences.getInstance();
   final savedMode = prefs.getString('app_theme_mode') ?? 'light';
   final initialTheme = AppThemeMode.values.firstWhere(
     (m) => m.name == savedMode,
     orElse: () => AppThemeMode.light,
   );
+  final savedLanguage = prefs.getString(LocaleNotifier.key) ?? 'en';
+  final initialLocale =
+      ['en', 'fr'].contains(savedLanguage) ? savedLanguage : 'en';
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
@@ -36,6 +42,8 @@ void main() async {
   runApp(ProviderScope(
     overrides: [
       themeProvider.overrideWith((_) => ThemeNotifier(initialTheme)),
+      localeProvider
+          .overrideWith((_) => LocaleNotifier(Locale(initialLocale))),
     ],
     child: const TaskGuardApp(),
   ));
@@ -47,6 +55,7 @@ class TaskGuardApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appMode = ref.watch(themeProvider);
+    final locale = ref.watch(localeProvider);
 
     // Keep status bar icon brightness in sync with the active theme.
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -62,6 +71,13 @@ class TaskGuardApp extends ConsumerWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: appMode.flutterMode,
+      locale: locale,
+      supportedLocales: const [Locale('en'), Locale('fr')],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       home: const SplashScreen(),
       builder: (context, child) {
         final width = MediaQuery.of(context).size.width;

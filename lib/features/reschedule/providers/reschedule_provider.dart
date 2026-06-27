@@ -60,8 +60,8 @@ class RescheduleNotifier extends StateNotifier<RescheduleState> {
   Future<bool> applySlot(String taskId, TimeSlot slot) async {
     try {
       await _taskService.updateTask(taskId, {
-        'startTime': slot.start.toIso8601String(),
-        'dueDate': slot.end.toIso8601String(),
+        'startTime': slot.start.toUtc().toIso8601String(),
+        'dueDate': slot.end.toUtc().toIso8601String(),
       });
       final overdue = state.plan?.suggestions
           .map((s) => s.overdueTask)

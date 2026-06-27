@@ -95,10 +95,12 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       final task = await _taskService.createTask(
         title: title,
         description: _descCtrl.text.trim().isEmpty ? null : _descCtrl.text.trim(),
-        dueDate: _taskDateTime?.toIso8601String(),
-        startTime: _taskDateTime?.toIso8601String(),
+        // .toUtc() first — a bare local-time ISO string has no offset, so the
+        // backend (running in UTC) would misread it as that many hours off.
+        dueDate: _taskDateTime?.toUtc().toIso8601String(),
+        startTime: _taskDateTime?.toUtc().toIso8601String(),
         priority: _priority,
-        remindAt: _remindAt?.toIso8601String(),
+        remindAt: _remindAt?.toUtc().toIso8601String(),
       );
       // Schedule all local reminders — works offline (no backend needed)
       final dt = _taskDateTime;

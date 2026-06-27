@@ -21,7 +21,6 @@ import '../../theme/app_colors.dart';
 import '../../widgets/app_header.dart';
 import '../../widgets/break_reminder_banner.dart';
 import '../../widgets/burnout_warning_sheet.dart';
-import '../../widgets/offline_banner.dart';
 import '../../widgets/responsive_layout.dart';
 import '../prioritization/prioritization_screen.dart';
 import '../reports/reports_screen.dart';
@@ -71,7 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _showMoodCheckin = false;
   String _userName = 'User';
   bool _loading = true;
-  bool _isOffline = false;
 
   @override
   void initState() {
@@ -126,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // Anything unexpected (e.g. a secure-storage read failure) must not
       // leave the screen stuck on its loading spinner forever.
       tasks = LocalStorage.getTodayTasks();
-      if (mounted) setState(() { _loading = false; _isOffline = true; });
+      if (mounted) setState(() { _loading = false; });
     }
     if (mounted) {
       final now = DateTime.now();
@@ -155,24 +153,15 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
 
-    // Auth check: determines online/offline status
     try {
       final user = await _authService.getMe();
       await LocalStorage.saveUser(user);
       if (mounted) {
         setState(() {
           _userName = user['name'] ?? 'User';
-          _isOffline = false;
         });
       }
-    } on DioException catch (e) {
-      if (!mounted) return;
-      final isNetworkDown = e.response == null ||
-          e.type == DioExceptionType.connectionError ||
-          e.type == DioExceptionType.connectionTimeout ||
-          e.type == DioExceptionType.receiveTimeout ||
-          e.type == DioExceptionType.sendTimeout;
-      setState(() { _isOffline = isNetworkDown; });
+    } on DioException {
       return;
     }
 
@@ -284,7 +273,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
-          if (_isOffline) const OfflineBanner(),
           Expanded(
             child: _loading
                 ? const Center(

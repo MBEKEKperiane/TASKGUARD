@@ -1,45 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../../features/locale/providers/locale_provider.dart';
 import '../../theme/app_colors.dart';
 
-class LanguageScreen extends StatefulWidget {
+class LanguageScreen extends ConsumerWidget {
   const LanguageScreen({super.key});
 
-  @override
-  State<LanguageScreen> createState() => _LanguageScreenState();
-}
-
-class _LanguageScreenState extends State<LanguageScreen> {
   static const _languages = [
     ('English', 'en', '🇺🇸'),
     ('French', 'fr', '🇫🇷'),
-    ('Spanish', 'es', '🇪🇸'),
-    ('German', 'de', '🇩🇪'),
-    ('Arabic', 'ar', '🇸🇦'),
-    ('Portuguese', 'pt', '🇧🇷'),
   ];
 
-  String _selected = 'en';
-
   @override
-  void initState() {
-    super.initState();
-    SharedPreferences.getInstance().then((prefs) {
-      if (mounted) {
-        setState(() => _selected = prefs.getString('app_language') ?? 'en');
-      }
-    });
-  }
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selected = ref.watch(localeProvider).languageCode;
 
-  Future<void> _select(String code) async {
-    setState(() => _selected = code);
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('app_language', code);
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.colBg,
       appBar: AppBar(
@@ -65,9 +41,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
           const SizedBox(height: 16),
           ..._languages.map((lang) {
             final (name, code, flag) = lang;
-            final selected = _selected == code;
+            final isSelected = selected == code;
             return GestureDetector(
-              onTap: () => _select(code),
+              onTap: () => ref.read(localeProvider.notifier).set(code),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 180),
                 margin: const EdgeInsets.only(bottom: 10),
@@ -77,8 +53,8 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   color: context.colCard,
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(
-                    color: selected ? AppColors.primary : context.colDivider,
-                    width: selected ? 2 : 1,
+                    color: isSelected ? AppColors.primary : context.colDivider,
+                    width: isSelected ? 2 : 1,
                   ),
                 ),
                 child: Row(
@@ -91,7 +67,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                             fontWeight: FontWeight.w500,
                             color: context.colText1)),
                     const Spacer(),
-                    if (selected)
+                    if (isSelected)
                       Container(
                         width: 22,
                         height: 22,

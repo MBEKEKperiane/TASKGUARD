@@ -164,10 +164,10 @@ class _VoiceTaskSheetState extends State<VoiceTaskSheet>
     try {
       final task = await _taskService.createTask(
         title: title,
-        dueDate: dt?.toIso8601String(),
-        startTime: dt?.toIso8601String(),
+        dueDate: dt?.toUtc().toIso8601String(),
+        startTime: dt?.toUtc().toIso8601String(),
         priority: _priority,
-        remindAt: _remindAt(dt)?.toIso8601String(),
+        remindAt: _remindAt(dt)?.toUtc().toIso8601String(),
       );
       if (dt != null && dt.isAfter(DateTime.now())) {
         await LocalNotificationService.scheduleAllReminders(
