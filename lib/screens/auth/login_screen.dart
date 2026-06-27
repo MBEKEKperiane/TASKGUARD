@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../features/auth/models/auth_state.dart';
 import '../../features/auth/providers/auth_provider.dart';
+import '../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 import '../../widgets/bottom_nav_shell.dart';
 import '../../widgets/responsive_layout.dart';
@@ -30,6 +31,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     ref.listen<AuthState>(authProvider, (previous, next) {
       if (next.status == AuthStatus.authenticated) {
         Navigator.of(context).pushAndRemoveUntil(
@@ -96,7 +98,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             fontWeight: FontWeight.w800,
                             color: AppColors.primary)),
                     const SizedBox(height: 6),
-                    Text('Stress-free precision for your workflow.',
+                    Text(t.stressFreePrecision,
                         style: GoogleFonts.inter(
                             fontSize: 13, color: context.colText2)),
                     const SizedBox(height: 40),
@@ -116,13 +118,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _label('Email Address'),
+                          _label(t.emailAddress),
                           const SizedBox(height: 8),
                           TextField(
                             controller: _emailCtrl,
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
-                              hintText: 'name@company.com',
+                              hintText: t.emailHint,
                               prefixIcon: Icon(Icons.mail_outline_rounded,
                                   color: context.colHint, size: 20),
                             ),
@@ -131,7 +133,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              _label('Password'),
+                              _label(t.password),
                               TextButton(
                                 onPressed: _forgotPassword,
                                 style: TextButton.styleFrom(
@@ -139,7 +141,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                     minimumSize: Size.zero,
                                     tapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap),
-                                child: Text('Forgot password?',
+                                child: Text(t.forgotPassword,
                                     style: GoogleFonts.inter(
                                         fontSize: 13,
                                         color: AppColors.primary,
@@ -176,14 +178,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               ? const Center(
                                   child: CircularProgressIndicator(
                                       color: AppColors.primary))
-                              : _gradientButton('Log In', onTap: _login),
+                              : _gradientButton(t.logIn, onTap: _login),
                           const SizedBox(height: 20),
                           Row(children: [
                             const Expanded(child: Divider()),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 12),
-                              child: Text('OR',
+                              child: Text(t.or,
                                   style: GoogleFonts.inter(
                                       fontSize: 12,
                                       color: context.colHint,
@@ -211,7 +213,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               child: const Icon(Icons.g_mobiledata,
                                   size: 16, color: Colors.black54),
                             ),
-                            label: Text('Continue with Google',
+                            label: Text(t.continueWithGoogle,
                                 style: GoogleFonts.inter(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500)),
@@ -220,7 +222,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('New here? ',
+                              Text(t.newHere,
                                   style: GoogleFonts.inter(
                                       fontSize: 14,
                                       color: context.colText2)),
@@ -230,7 +232,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   MaterialPageRoute(
                                       builder: (_) => const RegisterScreen()),
                                 ),
-                                child: Text('Sign Up',
+                                child: Text(t.signUp,
                                     style: GoogleFonts.inter(
                                         fontSize: 14,
                                         color: AppColors.primary,
@@ -248,7 +250,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         Icon(Icons.shield_outlined,
                             size: 14, color: context.colHint),
                         const SizedBox(width: 5),
-                        Text('Secured by TaskGuard Encryption',
+                        Text(t.securedByEncryption,
                             style: GoogleFonts.inter(
                                 fontSize: 12, color: context.colHint)),
                       ],
@@ -269,8 +271,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final password = _passCtrl.text;
     if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter your email and password.'),
+        SnackBar(
+          content: Text(AppLocalizations.of(context).enterEmailAndPassword),
           backgroundColor: AppColors.error,
         ),
       );
@@ -370,20 +372,21 @@ class _ForgotPasswordDialogState
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      title: Text('Reset Password',
+      title: Text(t.resetPassword,
           style: GoogleFonts.inter(
               fontWeight: FontWeight.w700, color: AppColors.primary)),
       content: _sent
           ? Text(
-              'A password reset link has been sent to ${_ctrl.text.trim()}.',
+              t.resetLinkSentTo(_ctrl.text.trim()),
               style: GoogleFonts.inter(fontSize: 14, color: context.colText2),
             )
           : Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Enter your email and we\'ll send you a reset link.',
+                Text(t.enterEmailForResetLink,
                     style: GoogleFonts.inter(
                         fontSize: 13, color: context.colText2)),
                 const SizedBox(height: 16),
@@ -391,7 +394,7 @@ class _ForgotPasswordDialogState
                   controller: _ctrl,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    hintText: 'name@company.com',
+                    hintText: t.emailHint,
                     prefixIcon: Icon(Icons.mail_outline_rounded,
                         color: context.colHint, size: 20),
                   ),
@@ -401,7 +404,7 @@ class _ForgotPasswordDialogState
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text('Close',
+          child: Text(t.close,
               style: GoogleFonts.inter(color: context.colText2)),
         ),
         if (!_sent)
@@ -416,7 +419,7 @@ class _ForgotPasswordDialogState
                 )
               : TextButton(
                   onPressed: _submit,
-                  child: Text('Send Link',
+                  child: Text(t.sendLink,
                       style: GoogleFonts.inter(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w600)),

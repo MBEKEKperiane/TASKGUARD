@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'features/locale/providers/locale_provider.dart';
 import 'features/theme/providers/theme_provider.dart';
+import 'l10n/app_localizations.dart';
 import 'services/local_storage.dart';
 import 'services/local_notification_service.dart';
 import 'theme/app_theme.dart';
@@ -74,6 +75,7 @@ class TaskGuardApp extends ConsumerWidget {
       locale: locale,
       supportedLocales: const [Locale('en'), Locale('fr')],
       localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../features/auth/models/auth_state.dart';
 import '../../features/auth/providers/auth_provider.dart';
+import '../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 import '../../widgets/bottom_nav_shell.dart';
 import '../../widgets/responsive_layout.dart';
@@ -35,6 +36,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     ref.listen<AuthState>(authProvider, (previous, next) {
       if (next.status == AuthStatus.authenticated) {
         Navigator.of(context).pushAndRemoveUntil(
@@ -108,7 +110,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Create Account',
+                      t.createAccount,
                       style: GoogleFonts.inter(
                         fontSize: 24,
                         fontWeight: FontWeight.w800,
@@ -117,7 +119,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Begin your AI-powered workflow journey.',
+                      t.beginWorkflowJourney,
                       style: GoogleFonts.inter(
                           fontSize: 13, color: context.colText2),
                       textAlign: TextAlign.center,
@@ -139,32 +141,32 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _label('Full Name'),
+                          _label(t.fullName),
                           const SizedBox(height: 8),
                           TextField(
                             controller: _nameCtrl,
                             keyboardType: TextInputType.name,
                             textCapitalization: TextCapitalization.words,
                             decoration: InputDecoration(
-                              hintText: 'John Doe',
+                              hintText: t.fullNameHint,
                               prefixIcon: Icon(Icons.person_outline_rounded,
                                   color: context.colHint, size: 20),
                             ),
                           ),
                           const SizedBox(height: 20),
-                          _label('Email Address'),
+                          _label(t.emailAddress),
                           const SizedBox(height: 8),
                           TextField(
                             controller: _emailCtrl,
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
-                              hintText: 'name@company.com',
+                              hintText: t.emailHint,
                               prefixIcon: Icon(Icons.mail_outline_rounded,
                                   color: context.colHint, size: 20),
                             ),
                           ),
                           const SizedBox(height: 20),
-                          _label('Password'),
+                          _label(t.password),
                           const SizedBox(height: 8),
                           TextField(
                             controller: _passCtrl,
@@ -189,7 +191,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          _label('Confirm Password'),
+                          _label(t.confirmPassword),
                           const SizedBox(height: 8),
                           TextField(
                             controller: _confirmPassCtrl,
@@ -219,14 +221,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                               ? const Center(
                                   child: CircularProgressIndicator(
                                       color: AppColors.primary))
-                              : _gradientButton('Sign Up', onTap: _register),
+                              : _gradientButton(t.signUp, onTap: _register),
                           const SizedBox(height: 20),
                           Row(children: [
                             const Expanded(child: Divider()),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 12),
-                              child: Text('OR',
+                              child: Text(t.or,
                                   style: GoogleFonts.inter(
                                       fontSize: 12,
                                       color: context.colHint,
@@ -253,7 +255,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                               child: const Icon(Icons.g_mobiledata,
                                   size: 16, color: Colors.black54),
                             ),
-                            label: Text('Continue with Google',
+                            label: Text(t.continueWithGoogle,
                                 style: GoogleFonts.inter(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500)),
@@ -262,13 +264,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('Already have an account? ',
+                              Text(t.alreadyHaveAccountQ,
                                   style: GoogleFonts.inter(
                                       fontSize: 14,
                                       color: context.colText2)),
                               GestureDetector(
                                 onTap: () => Navigator.pop(context),
-                                child: Text('Log In',
+                                child: Text(t.logIn,
                                     style: GoogleFonts.inter(
                                         fontSize: 14,
                                         color: AppColors.primary,
@@ -286,7 +288,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         Icon(Icons.shield_outlined,
                             size: 14, color: context.colHint),
                         const SizedBox(width: 5),
-                        Text('Secured by TaskGuard Encryption',
+                        Text(t.securedByEncryption,
                             style: GoogleFonts.inter(
                                 fontSize: 12, color: context.colHint)),
                       ],
@@ -308,16 +310,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     final password = _passCtrl.text;
     final confirm = _confirmPassCtrl.text;
 
+    final t = AppLocalizations.of(context);
     if (name.isEmpty || email.isEmpty || password.isEmpty || confirm.isEmpty) {
-      _showError('Please fill in all fields.');
+      _showError(t.fillAllFields);
       return;
     }
     if (password != confirm) {
-      _showError('Passwords do not match.');
+      _showError(t.passwordsDoNotMatch);
       return;
     }
     if (password.length < 8) {
-      _showError('Password must be at least 8 characters.');
+      _showError(t.passwordTooShort);
       return;
     }
 

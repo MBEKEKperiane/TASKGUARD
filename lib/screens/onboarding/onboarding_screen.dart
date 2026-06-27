@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 import '../../widgets/responsive_layout.dart';
 import '../auth/login_screen.dart';
@@ -17,6 +18,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -102,8 +104,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           right: 14,
                           child: _badge(
                             icon: Icons.auto_awesome,
-                            label: 'OPTIMIZED',
-                            subtitle: 'Deep Work Found',
+                            label: t.onboardingOptimized,
+                            subtitle: t.onboardingDeepWorkFound,
                             color: AppColors.primary,
                           ),
                         ),
@@ -112,8 +114,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           left: 14,
                           child: _badge(
                             icon: Icons.eco_rounded,
-                            label: 'WELLNESS',
-                            subtitle: 'Stress Minimized',
+                            label: t.onboardingWellness,
+                            subtitle: t.onboardingStressMinimized,
                             color: AppColors.secondary,
                             labelColor: AppColors.secondary,
                           ),
@@ -122,7 +124,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                     const SizedBox(height: 36),
                     Text(
-                      'AI for your Peace\nof Mind.',
+                      t.onboardingTitle,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inter(
                         fontSize: 26,
@@ -133,7 +135,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Let our neural engine handle the chaos\nwhile you focus on what truly matters.\nPrecision scheduling, automated.',
+                      t.onboardingSubtitle,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inter(
                         fontSize: 14,
@@ -156,7 +158,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               padding: const EdgeInsets.fromLTRB(28, 8, 28, 0),
               child: Column(
                 children: [
-                  _gradientButton('Get Started', onTap: () {
+                  _gradientButton(t.getStarted, onTap: () {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (_) => const RegisterScreen()),
                     );
@@ -168,7 +170,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       );
                     },
                     child: Text(
-                      'I already have an account',
+                      t.alreadyHaveAccount,
                       style: GoogleFonts.inter(
                         fontSize: 14,
                         color: AppColors.primary,

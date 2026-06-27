@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiClient {
-  static const _renderUrl = 'https://taskguard-xilh.onrender.com/api';
+  // LOCAL DEV — phone and PC must be on the same Wi-Fi network.
+  static const _renderUrl = 'http://192.168.246.77:3000/api';
+  // static const _renderUrl = 'https://taskguard-xilh.onrender.com/api'; // Uncomment before production deployment
 
   static String get _baseUrl {
     // All platforms point to the hosted Render backend in production.

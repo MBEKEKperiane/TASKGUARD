@@ -1,0 +1,43 @@
+{
+  "@@locale": "en",
+
+  "onboardingOptimized": "OPTIMIZED",
+  "onboardingDeepWorkFound": "Deep Work Found",
+  "onboardingWellness": "WELLNESS",
+  "onboardingStressMinimized": "Stress Minimized",
+  "onboardingTitle": "AI for your Peace\nof Mind.",
+  "onboardingSubtitle": "Let our neural engine handle the chaos\nwhile you focus on what truly matters.\nPrecision scheduling, automated.",
+  "getStarted": "Get Started",
+  "alreadyHaveAccount": "I already have an account",
+
+  "emailAddress": "Email Address",
+  "emailHint": "name@company.com",
+  "password": "Password",
+  "forgotPassword": "Forgot password?",
+  "logIn": "Log In",
+  "or": "OR",
+  "continueWithGoogle": "Continue with Google",
+  "newHere": "New here? ",
+  "signUp": "Sign Up",
+  "securedByEncryption": "Secured by TaskGuard Encryption",
+  "stressFreePrecision": "Stress-free precision for your workflow.",
+  "enterEmailAndPassword": "Please enter your email and password.",
+  "resetPassword": "Reset Password",
+  "resetLinkSentTo": "A password reset link has been sent to {email}.",
+  "@resetLinkSentTo": {
+    "placeholders": { "email": { "type": "String" } }
+  },
+  "enterEmailForResetLink": "Enter your email and we'll send you a reset link.",
+  "close": "Close",
+  "sendLink": "Send Link",
+
+  "createAccount": "Create Account",
+  "beginWorkflowJourney": "Begin your AI-powered workflow journey.",
+  "fullName": "Full Name",
+  "fullNameHint": "John Doe",
+  "confirmPassword": "Confirm Password",
+  "alreadyHaveAccountQ": "Already have an account? ",
+  "fillAllFields": "Please fill in all fields.",
+  "passwordsDoNotMatch": "Passwords do not match.",
+  "passwordTooShort": "Password must be at least 8 characters."
+}
