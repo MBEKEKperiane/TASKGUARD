@@ -122,15 +122,9 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       }
       if (mounted) Navigator.of(context).pop();
     } catch (_) {
-      if (mounted) {
-        setState(() => _submitting = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('Saved offline — will sync when connected.'),
-              backgroundColor: AppColors.primary),
-        );
-        Navigator.of(context).pop();
-      }
+      // Task is already saved locally by createTask — only reminder
+      // scheduling could land here, which isn't worth blocking on.
+      if (mounted) Navigator.of(context).pop();
     }
   }
 

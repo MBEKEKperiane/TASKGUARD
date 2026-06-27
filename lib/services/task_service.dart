@@ -75,6 +75,11 @@ class TaskService {
     return res.data['task'] as Map<String, dynamic>;
   }
 
+  /// Returns instantly with a locally-cached task — never waits on the
+  /// network (which can take a long time if the backend is cold-starting).
+  /// The real create request fires in the background and swaps the task's
+  /// temporary ID for the server one once it lands, or queues it as a
+  /// pending op if it fails.
   Future<Map<String, dynamic>> createTask({
     required String title,
     String? description,
@@ -99,29 +104,37 @@ class TaskService {
       if (subtasks != null) 'subtasks': subtasks,
       if (remindAt != null) 'remindAt': remindAt,
     };
+
+    final tempId = 'pending_${DateTime.now().millisecondsSinceEpoch}';
+    final optimistic = {
+      'id': tempId,
+      'title': title,
+      'priority': priority ?? 'MEDIUM',
+      'isCompleted': false,
+      ...data,
+    };
+    final cached = LocalStorage.getTodayTasks();
+    cached.add(optimistic);
+    await LocalStorage.saveTodayTasks(cached);
+
+    _createTaskInBackground(tempId, data);
+    return optimistic;
+  }
+
+  Future<void> _createTaskInBackground(
+      String tempId, Map<String, dynamic> data) async {
     try {
       final res = await _api.post('/tasks', data: data);
       final task = res.data['task'] as Map<String, dynamic>;
-      // Add to local cache immediately — home screen will full-refresh on return
-      final cached = LocalStorage.getTodayTasks();
-      cached.add(task);
-      await LocalStorage.saveTodayTasks(cached);
-      return task;
-    } on DioException {
-      // Save for sync when back online
-      await LocalStorage.addPendingOp({'type': 'createTask', 'data': data});
-      // Optimistically add to local cache
-      final cached = LocalStorage.getTodayTasks();
-      final optimistic = {
-        'id': 'pending_${DateTime.now().millisecondsSinceEpoch}',
-        'title': title,
-        'priority': priority ?? 'MEDIUM',
-        'isCompleted': false,
-        ...data,
-      };
-      cached.add(optimistic);
-      await LocalStorage.saveTodayTasks(cached);
-      return optimistic;
+      final today = LocalStorage.getTodayTasks();
+      final idx = today.indexWhere((t) => t['id'] == tempId);
+      if (idx != -1) {
+        today[idx] = task;
+        await LocalStorage.saveTodayTasks(today);
+      }
+    } catch (_) {
+      // Backend unreachable — keep the optimistic copy and sync it later.
+      await LocalStorage.addPendingOp({'type': 'createTask', 'data': data, 'tempId': tempId});
     }
   }
 

@@ -26,9 +26,12 @@ class LocalNotificationService {
   static const _iDeadlineApproach = 2;
   static const _iDeadline = 3;
   static const _iOverdueFirst = 4;
-  static const _overdueCount = 10;
+  static const _overdueCount = 10; // every 30 min for the first 5 hours
+  static const _iOverdueLongTailFirst = 14;
+  static const _overdueLongTailCount = 60; // every 2 hours for ~5 more days
+  static const _overdueLongTailIntervalMins = 120;
 
-  static int _base(String taskId) => taskId.hashCode.abs() % 5000 * 20;
+  static int _base(String taskId) => taskId.hashCode.abs() % 5000 * 100;
 
   // ── Initialisation ────────────────────────────────────────────────────────
 
@@ -240,7 +243,11 @@ class LocalNotificationService {
     }
 
     // ── Overdue batch ─────────────────────────────────────────────────────
-    // Anchors at dueDate when provided, otherwise at startTime.
+    // Anchors at dueDate when provided, otherwise at startTime. Keeps
+    // nudging every 30 min for 5 hours, then every 2 hours for ~5 more
+    // days — all scheduled up front so it keeps firing even if the app
+    // is never reopened. cancelAllReminders stops it the moment the task
+    // is marked done.
     final anchor = dueDate ?? startTime;
     if (anchor != null) {
       for (int i = 0; i < _overdueCount; i++) {
@@ -249,6 +256,17 @@ class LocalNotificationService {
           base + _iOverdueFirst + i,
           '🚨 Task Overdue',
           '"$taskTitle" is $delayMins min overdue — still needs attention',
+          anchor.add(Duration(minutes: delayMins)),
+          _overdueDetails,
+        ));
+      }
+      final firstTailDelay = _overdueCount * 30;
+      for (int i = 0; i < _overdueLongTailCount; i++) {
+        final delayMins = firstTailDelay + (i + 1) * _overdueLongTailIntervalMins;
+        futures.add(_schedule(
+          base + _iOverdueLongTailFirst + i,
+          '🚨 Task Still Overdue',
+          '"$taskTitle" is still not done — mark it complete to stop these reminders',
           anchor.add(Duration(minutes: delayMins)),
           _overdueDetails,
         ));
@@ -277,12 +295,14 @@ class LocalNotificationService {
       final anchor = DateTime.tryParse(anchorStr);
       if (anchor == null || anchor.isAfter(now)) continue;
 
-      // Original batch covers anchor+30 min … anchor+300 min (5 hours).
-      // Skip if any slot in that window is still in the future.
-      final batchEnd = anchor.add(const Duration(minutes: 30 * 10));
+      // The upfront batch already covers 5 hours + ~5 days. Only re-batch
+      // once that entire window has elapsed.
+      final batchEnd = anchor.add(Duration(
+          minutes: _overdueCount * 30 +
+              _overdueLongTailCount * _overdueLongTailIntervalMins));
       if (batchEnd.isAfter(now)) continue;
 
-      // Every slot has fired — schedule a fresh 5-hour window from now.
+      // Every slot has fired — schedule a fresh window from now.
       final base = _base(taskId);
       final hoursSince = now.difference(anchor).inHours;
       for (int i = 0; i < _overdueCount; i++) {
@@ -291,6 +311,17 @@ class LocalNotificationService {
           base + _iOverdueFirst + i,
           '🚨 Task Still Overdue',
           '"$title" is ~${hoursSince}h overdue — open TaskGuard to resolve',
+          now.add(Duration(minutes: delayMins)),
+          _overdueDetails,
+        ));
+      }
+      final firstTailDelay = _overdueCount * 30;
+      for (int i = 0; i < _overdueLongTailCount; i++) {
+        final delayMins = firstTailDelay + (i + 1) * _overdueLongTailIntervalMins;
+        futures.add(_schedule(
+          base + _iOverdueLongTailFirst + i,
+          '🚨 Task Still Overdue',
+          '"$title" is ~${hoursSince}h overdue — mark it complete to stop these reminders',
           now.add(Duration(minutes: delayMins)),
           _overdueDetails,
         ));
@@ -305,7 +336,7 @@ class LocalNotificationService {
   static Future<void> cancelAllReminders(String taskId) async {
     final base = _base(taskId);
     await Future.wait([
-      for (int i = 0; i < _iOverdueFirst + _overdueCount; i++)
+      for (int i = 0; i < _iOverdueLongTailFirst + _overdueLongTailCount; i++)
         _plugin.cancel(base + i),
     ]);
   }

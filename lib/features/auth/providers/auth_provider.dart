@@ -10,27 +10,42 @@ class AuthNotifier extends StateNotifier<AuthState> {
   AuthNotifier(this._auth)
       : super(const AuthState(status: AuthStatus.initial));
 
-  /// Restores session on app launch. Reads cached token, then validates with the API.
+  /// Restores session on app launch. If a cached user exists, applies it
+  /// immediately — the splash screen must never sit waiting on a slow or
+  /// cold-starting backend — then revalidates with the API in the
+  /// background. Only blocks on the network when there's no cache yet.
   Future<void> initialize() async {
     state = const AuthState(status: AuthStatus.loading);
+    final hasToken = await _auth.isLoggedIn;
+    if (!hasToken) {
+      state = const AuthState(status: AuthStatus.unauthenticated);
+      return;
+    }
+
+    final cached = LocalStorage.getUser();
+    if (cached != null) {
+      _applyUser(cached);
+      _refreshUserInBackground();
+      return;
+    }
+
     try {
-      final hasToken = await _auth.isLoggedIn;
-      if (!hasToken) {
-        state = const AuthState(status: AuthStatus.unauthenticated);
-        return;
-      }
-      // Validate token and get fresh user data
       final user = await _auth.getMe();
       await LocalStorage.saveUser(user);
       _applyUser(user);
     } catch (_) {
-      // Network error — fall back to cached user so offline launch still works
-      final cached = LocalStorage.getUser();
-      if (cached != null) {
-        _applyUser(cached);
-      } else {
-        state = const AuthState(status: AuthStatus.unauthenticated);
-      }
+      state = const AuthState(status: AuthStatus.unauthenticated);
+    }
+  }
+
+  Future<void> _refreshUserInBackground() async {
+    try {
+      final user = await _auth.getMe();
+      await LocalStorage.saveUser(user);
+      _applyUser(user);
+    } catch (_) {
+      // Stale cache is fine to keep showing — don't log the user out just
+      // because a background refresh failed.
     }
   }
 
