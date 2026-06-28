@@ -100,9 +100,10 @@ const login = async (req, res, next) => {
       data: { refreshToken },
     });
 
-    if (!user.emailVerified) {
-      await issueVerificationCode(user);
-    }
+    // Every email/password login requires a fresh 6-digit code as a
+    // second factor — issued unconditionally, regardless of whether this
+    // email was already verified in the past.
+    await issueVerificationCode(user);
 
     res.json({
       user: {
@@ -110,7 +111,7 @@ const login = async (req, res, next) => {
         email: user.email,
         name: user.name,
         theme: user.theme,
-        emailVerified: user.emailVerified,
+        emailVerified: false,
       },
       accessToken,
       refreshToken,
@@ -198,8 +199,9 @@ const verifyEmail = async (req, res, next) => {
     const user = await prisma.user.findUnique({ where: { id: req.user.id } });
 
     if (!user) return res.status(404).json({ error: 'User not found.' });
-    if (user.emailVerified) return res.json({ message: 'Email is already verified.' });
 
+    // No early-exit for already-verified accounts — every login now
+    // requires its own fresh code to be checked as a second factor.
     const isValid =
       code &&
       user.verificationToken === code &&
@@ -226,10 +228,6 @@ const resendVerification = async (req, res, next) => {
   try {
     const user = await prisma.user.findUnique({ where: { id: req.user.id } });
     if (!user) return res.status(404).json({ error: 'User not found.' });
-
-    if (user.emailVerified) {
-      return res.json({ message: 'Email is already verified.' });
-    }
 
     await issueVerificationCode(user);
 
