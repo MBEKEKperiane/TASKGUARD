@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../features/auth/providers/auth_provider.dart';
 import '../../features/mood/models/mood_entry.dart';
 import '../../l10n/app_localizations.dart';
 import '../../services/api_client.dart';
@@ -10,14 +12,14 @@ import '../../services/mood_storage.dart';
 import '../../theme/app_colors.dart';
 import '../onboarding/onboarding_screen.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   final _nameCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
 
@@ -117,7 +119,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _signOut() async {
-    await AuthService().logout();
+    // Goes through the provider so the global auth state resets to
+    // unauthenticated AND the local cache (tasks, chat history,
+    // gamification data, etc.) is cleared — otherwise stale data from
+    // this session can break the next login's home screen load.
+    await ref.read(authProvider.notifier).logout();
     if (mounted) {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (_) => const OnboardingScreen()),

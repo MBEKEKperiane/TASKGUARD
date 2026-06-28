@@ -142,13 +142,30 @@ class _HomeScreenState extends State<HomeScreen> {
           return false;
         }
       }).length;
+      // Computed outside setState — if stale/inconsistent cached data (e.g.
+      // left over from a previous session) makes one of these throw,
+      // setState's callback would abort before scheduling a rebuild,
+      // leaving the screen stuck on its loading spinner forever.
+      GamificationData? gamData;
+      try {
+        gamData = GamificationEngine.load();
+      } catch (_) {}
+      HealthEntry? healthEntry;
+      try {
+        healthEntry = HealthEngine.todayEntry();
+      } catch (_) {}
+      DeadlineReport? deadlineReport;
+      try {
+        deadlineReport = DeadlinePredictor.analyze();
+      } catch (_) {}
+
       setState(() {
         _todayTasks = tasks;
         _overdueCount = overdueCount;
         _loading = false;
-        _gamData = GamificationEngine.load();
-        _healthEntry = HealthEngine.todayEntry();
-        _deadlineReport = DeadlinePredictor.analyze();
+        _gamData = gamData;
+        _healthEntry = healthEntry;
+        _deadlineReport = deadlineReport;
       });
       // Keep overdue reminders alive — re-batches if the original 5-hour window expired.
       LocalNotificationService.rescheduleOverdueAlerts(
