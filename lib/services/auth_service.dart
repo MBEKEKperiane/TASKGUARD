@@ -94,6 +94,33 @@ class AuthService {
     await _api.post('/auth/forgot-password', data: {'email': email});
   }
 
+  Future<String> verifyResetCode({
+    required String email,
+    required String code,
+  }) async {
+    final res = await _api.post('/auth/verify-reset-code',
+        data: {'email': email, 'code': code});
+    return res.data['resetSessionToken'] as String;
+  }
+
+  Future<Map<String, dynamic>> resetPassword({
+    required String resetSessionToken,
+    required String newPassword,
+  }) async {
+    final res = await _api.post('/auth/reset-password', data: {
+      'resetSessionToken': resetSessionToken,
+      'newPassword': newPassword,
+    });
+    final data = res.data as Map<String, dynamic>;
+    final user = data['user'] as Map<String, dynamic>;
+    await _api.saveTokens(
+      data['accessToken'] as String,
+      data['refreshToken'] as String,
+    );
+    await LocalStorage.saveUser(user);
+    return user;
+  }
+
   Future<Map<String, dynamic>> getMe() async {
     final res = await _api.get('/auth/me');
     return res.data['user'] as Map<String, dynamic>;

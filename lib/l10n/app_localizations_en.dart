@@ -73,19 +73,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get resetPassword => 'Reset Password';
 
   @override
-  String resetLinkSentTo(String email) {
-    return 'A password reset link has been sent to $email.';
-  }
-
-  @override
-  String get enterEmailForResetLink =>
-      'Enter your email and we\'ll send you a reset link.';
+  String get enterEmailToReset =>
+      'Enter the email address linked to your account. We\'ll send you a 6-digit code.';
 
   @override
   String get close => 'Close';
 
   @override
-  String get sendLink => 'Send Link';
+  String get sendCode => 'Send Code';
+
+  @override
+  String get resetCodeSentCheckInbox => 'Code sent! Check your inbox.';
+
+  @override
+  String get setNewPassword => 'Set New Password';
+
+  @override
+  String get chooseNewPasswordSubtitle =>
+      'Choose a new password for your account.';
+
+  @override
+  String get newPassword => 'New Password';
 
   @override
   String get createAccount => 'Create Account';

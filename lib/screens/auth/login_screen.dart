@@ -8,6 +8,7 @@ import '../../theme/app_colors.dart';
 import '../../widgets/bottom_nav_shell.dart';
 import '../../widgets/responsive_layout.dart';
 import 'email_verification_screen.dart';
+import 'forgot_password_screen.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -286,10 +287,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _forgotPassword() {
-    final email = _emailCtrl.text.trim();
-    showDialog(
-      context: context,
-      builder: (_) => _ForgotPasswordDialog(initialEmail: email),
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const ForgotPasswordScreen()),
     );
   }
 
@@ -327,104 +327,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 fontWeight: FontWeight.w600,
                 color: Colors.white)),
       ),
-    );
-  }
-}
-
-class _ForgotPasswordDialog extends ConsumerStatefulWidget {
-  final String initialEmail;
-  const _ForgotPasswordDialog({required this.initialEmail});
-
-  @override
-  ConsumerState<_ForgotPasswordDialog> createState() =>
-      _ForgotPasswordDialogState();
-}
-
-class _ForgotPasswordDialogState
-    extends ConsumerState<_ForgotPasswordDialog> {
-  late final TextEditingController _ctrl;
-  bool _loading = false;
-  bool _sent = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _ctrl = TextEditingController(text: widget.initialEmail);
-  }
-
-  @override
-  void dispose() {
-    _ctrl.dispose();
-    super.dispose();
-  }
-
-  Future<void> _submit() async {
-    final email = _ctrl.text.trim();
-    if (email.isEmpty) return;
-    setState(() => _loading = true);
-    try {
-      await ref.read(authServiceProvider).forgotPassword(email);
-      if (mounted) setState(() { _sent = true; _loading = false; });
-    } catch (_) {
-      if (mounted) setState(() => _loading = false);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context);
-    return AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      title: Text(t.resetPassword,
-          style: GoogleFonts.inter(
-              fontWeight: FontWeight.w700, color: AppColors.primary)),
-      content: _sent
-          ? Text(
-              t.resetLinkSentTo(_ctrl.text.trim()),
-              style: GoogleFonts.inter(fontSize: 14, color: context.colText2),
-            )
-          : Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(t.enterEmailForResetLink,
-                    style: GoogleFonts.inter(
-                        fontSize: 13, color: context.colText2)),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: _ctrl,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    hintText: t.emailHint,
-                    prefixIcon: Icon(Icons.mail_outline_rounded,
-                        color: context.colHint, size: 20),
-                  ),
-                ),
-              ],
-            ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: Text(t.close,
-              style: GoogleFonts.inter(color: context.colText2)),
-        ),
-        if (!_sent)
-          _loading
-              ? const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                          color: AppColors.primary, strokeWidth: 2)),
-                )
-              : TextButton(
-                  onPressed: _submit,
-                  child: Text(t.sendLink,
-                      style: GoogleFonts.inter(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w600)),
-                ),
-      ],
     );
   }
 }

@@ -75,19 +75,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String get resetPassword => 'Réinitialiser le mot de passe';
 
   @override
-  String resetLinkSentTo(String email) {
-    return 'Un lien de réinitialisation a été envoyé à $email.';
-  }
-
-  @override
-  String get enterEmailForResetLink =>
-      'Saisissez votre e-mail et nous vous envoyons un lien de réinitialisation.';
+  String get enterEmailToReset =>
+      'Saisissez l\'e-mail lié à votre compte. Nous vous enverrons un code à 6 chiffres.';
 
   @override
   String get close => 'Fermer';
 
   @override
-  String get sendLink => 'Envoyer le lien';
+  String get sendCode => 'Envoyer le code';
+
+  @override
+  String get resetCodeSentCheckInbox =>
+      'Code envoyé ! Vérifiez votre boîte de réception.';
+
+  @override
+  String get setNewPassword => 'Définir un nouveau mot de passe';
+
+  @override
+  String get chooseNewPasswordSubtitle =>
+      'Choisissez un nouveau mot de passe pour votre compte.';
+
+  @override
+  String get newPassword => 'Nouveau mot de passe';
 
   @override
   String get createAccount => 'Créer un compte';

@@ -23,13 +23,13 @@
   "stressFreePrecision": "Stress-free precision for your workflow.",
   "enterEmailAndPassword": "Please enter your email and password.",
   "resetPassword": "Reset Password",
-  "resetLinkSentTo": "A password reset link has been sent to {email}.",
-  "@resetLinkSentTo": {
-    "placeholders": { "email": { "type": "String" } }
-  },
-  "enterEmailForResetLink": "Enter your email and we'll send you a reset link.",
+  "enterEmailToReset": "Enter the email address linked to your account. We'll send you a 6-digit code.",
   "close": "Close",
-  "sendLink": "Send Link",
+  "sendCode": "Send Code",
+  "resetCodeSentCheckInbox": "Code sent! Check your inbox.",
+  "setNewPassword": "Set New Password",
+  "chooseNewPasswordSubtitle": "Choose a new password for your account.",
+  "newPassword": "New Password",
 
   "createAccount": "Create Account",
   "beginWorkflowJourney": "Begin your AI-powered workflow journey.",

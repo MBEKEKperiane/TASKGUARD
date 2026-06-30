@@ -224,17 +224,11 @@ abstract class AppLocalizations {
   /// **'Reset Password'**
   String get resetPassword;
 
-  /// No description provided for @resetLinkSentTo.
+  /// No description provided for @enterEmailToReset.
   ///
   /// In en, this message translates to:
-  /// **'A password reset link has been sent to {email}.'**
-  String resetLinkSentTo(String email);
-
-  /// No description provided for @enterEmailForResetLink.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your email and we\'ll send you a reset link.'**
-  String get enterEmailForResetLink;
+  /// **'Enter the email address linked to your account. We\'ll send you a 6-digit code.'**
+  String get enterEmailToReset;
 
   /// No description provided for @close.
   ///
@@ -242,11 +236,35 @@ abstract class AppLocalizations {
   /// **'Close'**
   String get close;
 
-  /// No description provided for @sendLink.
+  /// No description provided for @sendCode.
   ///
   /// In en, this message translates to:
-  /// **'Send Link'**
-  String get sendLink;
+  /// **'Send Code'**
+  String get sendCode;
+
+  /// No description provided for @resetCodeSentCheckInbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Code sent! Check your inbox.'**
+  String get resetCodeSentCheckInbox;
+
+  /// No description provided for @setNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Set New Password'**
+  String get setNewPassword;
+
+  /// No description provided for @chooseNewPasswordSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a new password for your account.'**
+  String get chooseNewPasswordSubtitle;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPassword;
 
   /// No description provided for @createAccount.
   ///

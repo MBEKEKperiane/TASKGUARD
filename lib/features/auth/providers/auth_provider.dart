@@ -102,6 +102,30 @@ class AuthNotifier extends StateNotifier<AuthState> {
     await _auth.resendVerificationEmail();
   }
 
+  Future<void> sendPasswordResetCode(String email) async {
+    await _auth.forgotPassword(email);
+  }
+
+  Future<String> verifyPasswordResetCode({
+    required String email,
+    required String code,
+  }) {
+    return _auth.verifyResetCode(email: email, code: code);
+  }
+
+  /// Sets the new password and logs the user straight into the dashboard —
+  /// the code step already proved ownership of the email.
+  Future<void> completePasswordReset({
+    required String resetSessionToken,
+    required String newPassword,
+  }) async {
+    final user = await _auth.resetPassword(
+      resetSessionToken: resetSessionToken,
+      newPassword: newPassword,
+    );
+    _applyUser(user);
+  }
+
   /// Submits the 6-digit code. Throws on invalid/expired code.
   Future<void> verifyEmailCode(String code) async {
     await _auth.verifyEmailCode(code);

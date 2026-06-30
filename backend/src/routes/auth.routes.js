@@ -39,9 +39,16 @@ router.post('/forgot-password',
   ctrl.forgotPassword
 );
 
+router.post('/verify-reset-code',
+  body('email').isEmail().normalizeEmail(),
+  body('code').isLength({ min: 6, max: 6 }).withMessage('Code must be 6 digits.'),
+  validate,
+  ctrl.verifyResetCode
+);
+
 router.post('/reset-password',
-  body('token').notEmpty(),
-  body('newPassword').isLength({ min: 8 }),
+  body('resetSessionToken').notEmpty(),
+  body('newPassword').isLength({ min: 8 }).withMessage('Password must be at least 8 characters.'),
   validate,
   ctrl.resetPassword
 );
