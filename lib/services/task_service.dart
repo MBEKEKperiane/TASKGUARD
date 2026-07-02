@@ -154,6 +154,14 @@ class TaskService {
   }
 
   Future<Map<String, dynamic>> completeTask(String id) async {
+    // If the task was created optimistically and the server hasn't confirmed
+    // it yet, the real ID doesn't exist on the server — skip the network call
+    // and queue it; syncPendingOps will retry after the task is created.
+    if (id.startsWith('pending_')) {
+      await _markCompletedInCache(id);
+      await LocalStorage.addPendingOp({'type': 'completeTask', 'id': id});
+      return {'id': id, 'isCompleted': true};
+    }
     try {
       final res = await _api.patch('/tasks/$id/complete');
       final task = res.data['task'] as Map<String, dynamic>;

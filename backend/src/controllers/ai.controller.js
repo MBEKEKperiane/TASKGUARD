@@ -19,11 +19,27 @@ const chat = async (req, res, next) => {
     try {
       reply = await aiService.chat(userId, message, history);
     } catch (aiErr) {
-      console.error('[AI Chat] OpenRouter error:', aiErr.message);
-      return res.status(503).json({
-        error: 'AI service temporarily unavailable.',
-        code: 'AI_OFFLINE',
-      });
+      const is429 = aiErr.status === 429 ||
+        (aiErr.message && aiErr.message.includes('429'));
+      if (is429) {
+        // Gemini free tier is 15 RPM — wait 3 s then retry once.
+        try {
+          await new Promise((r) => setTimeout(r, 3000));
+          reply = await aiService.chat(userId, message, history);
+        } catch (retryErr) {
+          console.error('[AI Chat] Gemini rate-limit retry failed:', retryErr.message);
+          return res.status(503).json({
+            error: 'AI service temporarily unavailable.',
+            code: 'AI_OFFLINE',
+          });
+        }
+      } else {
+        console.error('[AI Chat] Gemini error:', aiErr.message);
+        return res.status(503).json({
+          error: 'AI service temporarily unavailable.',
+          code: 'AI_OFFLINE',
+        });
+      }
     }
 
     // Persist both messages
