@@ -1,12 +1,10 @@
 const OpenAI = require('openai');
 
+// Uses Google Gemini via its OpenAI-compatible endpoint.
+// Set GEMINI_API_KEY in your environment (Render → Environment tab).
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-  baseURL: 'https://openrouter.ai/api/v1',
-  defaultHeaders: {
-    'HTTP-Referer': 'https://taskguard.ai',
-    'X-Title': 'TaskGuard AI',
-  },
+  apiKey: process.env.GEMINI_API_KEY,
+  baseURL: 'https://generativelanguage.googleapis.com/v1beta/openai/',
 });
 
 const SYSTEM_PROMPT = `You are TaskGuard AI, an intelligent productivity assistant.

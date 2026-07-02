@@ -15,7 +15,7 @@ Estimated duration: ${estimatedDuration || 'unknown'} minutes
 Reply with ONLY a number between 0 and 100.`;
 
   const res = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: 'gemini-2.0-flash',
     messages: [{ role: 'user', content: prompt }],
     max_tokens: 5,
     temperature: 0,
@@ -46,7 +46,7 @@ Return ONLY valid JSON with these fields (use null if not mentioned):
 }`;
 
   const res = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: 'gemini-2.0-flash',
     messages: [{ role: 'user', content: prompt }],
     max_tokens: 300,
     temperature: 0,
@@ -65,7 +65,7 @@ const chat = async (userId, userMessage, history = []) => {
   ];
 
   const res = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: 'gemini-2.0-flash',
     messages,
     max_tokens: 500,
     temperature: 0.7,
@@ -98,7 +98,7 @@ Return JSON with:
 }`;
 
   const res = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: 'gemini-2.0-flash',
     messages: [{ role: 'user', content: prompt }],
     max_tokens: 600,
     temperature: 0.5,
@@ -126,7 +126,7 @@ ${occupied || 'Nothing scheduled yet.'}
 Reply with JSON: { "suggestedTime": "HH:MM", "reason": "brief reason" }`;
 
   const res = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: 'gemini-2.0-flash',
     messages: [{ role: 'user', content: prompt }],
     max_tokens: 150,
     temperature: 0.4,
@@ -156,7 +156,7 @@ Tasks: ${JSON.stringify(taskList)}
 Return JSON array: [{ "id": "", "aiPriorityScore": number, "reasoning": "" }]`;
 
   const res = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: 'gemini-2.0-flash',
     messages: [{ role: 'user', content: prompt }],
     max_tokens: 800,
     temperature: 0.2,
@@ -229,7 +229,7 @@ Return JSON:
 }`;
 
   const res = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: 'gemini-2.0-flash',
     messages: [{ role: 'user', content: prompt }],
     max_tokens: 400,
     temperature: 0.6,
