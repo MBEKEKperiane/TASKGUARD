@@ -15,7 +15,16 @@ const chat = async (req, res, next) => {
       select: { role: true, content: true },
     });
 
-    const reply = await aiService.chat(userId, message, history);
+    let reply;
+    try {
+      reply = await aiService.chat(userId, message, history);
+    } catch (aiErr) {
+      console.error('[AI Chat] OpenRouter error:', aiErr.message);
+      return res.status(503).json({
+        error: 'AI service temporarily unavailable.',
+        code: 'AI_OFFLINE',
+      });
+    }
 
     // Persist both messages
     await prisma.chatMessage.createMany({

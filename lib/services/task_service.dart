@@ -129,7 +129,9 @@ class TaskService {
       final today = LocalStorage.getTodayTasks();
       final idx = today.indexWhere((t) => t['id'] == tempId);
       if (idx != -1) {
-        today[idx] = task;
+        // Keep the old tempId so cancelAllReminders can cancel notification
+        // slots that were originally scheduled under the optimistic ID.
+        today[idx] = {...task, '_tempId': tempId};
         await LocalStorage.saveTodayTasks(today);
       }
     } catch (_) {

@@ -37,8 +37,16 @@ class AssistantService {
     try {
       final res = await _api.post('/ai/chat', data: {'message': enriched});
       reply = (res.data['reply'] as String?) ?? 'No response received.';
-    } on DioException {
-      reply = _offlineFallback(intent);
+    } on DioException catch (e) {
+      final code = e.response?.data is Map ? e.response?.data['code'] : null;
+      if (code == 'AI_OFFLINE') {
+        // Backend reachable but OpenRouter/AI provider is down.
+        reply = 'The AI assistant is temporarily unavailable. '
+            'Please try again in a moment.';
+      } else {
+        // True network error — device is offline or backend is cold-starting.
+        reply = _offlineFallback(intent);
+      }
     }
 
     // Persist both sides to local cache

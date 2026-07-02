@@ -1504,6 +1504,12 @@ class _HomeScreenState extends State<HomeScreen> {
               try {
                 await _taskService.completeTask(task['id']);
                 await LocalNotificationService.cancelAllReminders(task['id'] as String);
+                // Notifications may have been scheduled under the optimistic
+                // tempId before the server confirmed the real task ID.
+                final tempId = task['_tempId'] as String?;
+                if (tempId != null) {
+                  await LocalNotificationService.cancelAllReminders(tempId);
+                }
                 newBadges = await GamificationEngine.onTaskCompleted(
                   task: Map<String, dynamic>.from(task as Map),
                 );
@@ -1536,9 +1542,12 @@ class _HomeScreenState extends State<HomeScreen> {
               _completedTasks.removeWhere((t) => t['id'] == taskId);
             });
             try {
+              final tempId = task['_tempId'] as String?;
               await Future.wait([
                 _taskService.deleteTask(taskId),
                 LocalNotificationService.cancelAllReminders(taskId),
+                if (tempId != null)
+                  LocalNotificationService.cancelAllReminders(tempId),
               ]);
             } catch (_) {}
           },
